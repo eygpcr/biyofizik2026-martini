@@ -1,0 +1,22 @@
+# Simulasyon ciktilari (buyuk dosyalar)
+*.trr
+*.edr
+*.log
+*.cpt
+*.tpr
+*.xtc
+!05_analiz/trajektori/*.xtc
+!05_analiz/trajektori/*.tpr
+
+# Martini kuvvet alani dosyalari (notebook indiriyor, ~16 MB)
+martini_v3.0.0*.itp
+
+# CHARMM-GUI arsivleri
+charmm-gui*.tgz
+charmm-gui-*/
+
+# Gecici
+*~
+.DS_Store
+__pycache__/
+.ipynb_checkpoints/

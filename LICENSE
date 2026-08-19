@@ -1,0 +1,35 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+Copyright (c) 2026
+  Nazmi Yaraş, Mustafa Tekpınar, Ekrem Yaşar
+
+Bu depodaki kurs materyali (metinler, notebook'lar, şekiller) Creative Commons
+Atıf 4.0 Uluslararası Lisansı ile lisanslanmıştır.
+
+Serbestsiniz:
+  - Paylaşmak  — materyali her ortamda kopyalayabilir ve yeniden dağıtabilirsiniz
+  - Uyarlamak  — karıştırabilir, dönüştürebilir ve materyalin üzerine inşa
+                 edebilirsiniz; ticari amaçlar dâhil olmak üzere her amaçla
+
+Şu şartla:
+  - Atıf — uygun referansı vermeli, lisansa bağlantı sağlamalı ve değişiklik
+    yapıldıysa bunu belirtmelisiniz.
+
+Lisansın tam metni:
+  https://creativecommons.org/licenses/by/4.0/legalcode.tr
+Özet:
+  https://creativecommons.org/licenses/by/4.0/deed.tr
+
+--------------------------------------------------------------------------------
+ÜÇÜNCÜ TARAF MATERYALLER
+
+Bu depo, aşağıdaki projelerin tutorial içeriklerini KOPYALAMAZ; yalnızca
+bağlantı verir. Kendi lisans koşulları geçerlidir:
+
+  - cgmartini.nl tutorial'ları — Groningen Üniversitesi, Marrink grubu
+  - MARTINI Odyssey Athens 2026 — github.com/paulocts/martini-odyssey-2026
+  - CHARMM-GUI — charmm-gui.org
+  - GROMACS — LGPL-2.1, gromacs.org
+  - bentopy — github.com/marrink-lab/bentopy
+
+PDB yapıları (1AKI, 6JOD) RCSB Protein Data Bank'tan alınmıştır ve kamuya açıktır.
