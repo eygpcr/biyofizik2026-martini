@@ -1,0 +1,26 @@
+[ general ]
+title "Proteins in different compartments"
+seed 0
+
+[ space ]
+dimensions 40, 40, 40
+resolution 0.5
+
+[ includes ]
+"topology/martini_v3.0.0.itp"
+"topology/martini_v3.0.0_ions_v1.itp"
+"topology/martini_v3.0.0_solvents_v1.itp"
+"topology/martini_v3.0.0_phospholipids_v1.itp"
+"topology/lysozyme.itp"
+"topology/ubiquitin.itp"
+
+[ compartments ]
+membrane from "membrane_mask.npz"
+A from "A_mask.npz"
+B from "B_mask.npz"
+membrane-neighborhood around 4 of membrane
+B-close-to-membrane combines membrane-neighborhood and B
+
+[ segments ]
+LYZ:lyz 200 from "structures/lysozyme.pdb" in A
+UBQ:ubq 100 from "structures/ubiquitin.pdb" in B-close-to-membrane

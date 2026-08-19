@@ -1,0 +1,24 @@
+[ general ]
+title "Proteins around a membrane"
+seed 0
+
+[ space ]
+dimensions 40, 40, 40
+resolution 0.5
+
+[ includes ]
+"topology/martini_v3.0.0.itp"
+"topology/martini_v3.0.0_ions_v1.itp"
+"topology/martini_v3.0.0_solvents_v1.itp"
+"topology/martini_v3.0.0_phospholipids_v1.itp"
+"topology/lysozyme.itp"
+"topology/ubiquitin.itp"
+
+[ compartments ]
+membrane from "membrane_mask.npz"
+solvent combines not membrane
+close-to-membrane around 5 of membrane
+
+[ segments ]
+LYZ:lyz 300 from "structures/lysozyme.pdb" in solvent
+UBQ:ubq 100 from "structures/ubiquitin.pdb" in close-to-membrane

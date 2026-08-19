@@ -18,7 +18,7 @@ sonrası çalışma kaynakları.
 | Eğitmen | Kurum |
 |---|---|
 | Prof. Dr. Nazmi Yaraş | Akdeniz Üniversitesi, Biyofizik Anabilim Dalı |
-| Doç. Dr. Mustafa Tekpınar | — |
+| Doç. Dr. Mustafa Tekpınar | Van Yüzüncü Yıl Üniversitesi, Fen Fakültesi, Fizik Bölümü |
 | Dr. Öğr. Üyesi Ekrem Yaşar | Erzincan Binali Yıldırım Üniversitesi, Biyofizik Anabilim Dalı |
 
 ---
@@ -64,9 +64,7 @@ simülasyonu deneyimi olmadığı varsayılmaktadır.
 1. [KURULUM.md](KURULUM.md) dosyasındaki hesap ve yazılım kontrol listesi kurs
    gününden önce tamamlanmalıdır. CHARMM-GUI hesap onayı bir iş günü
    sürebildiğinden bu adım geciktirilmemelidir.
-2. [ON_TOPLANTI.md](ON_TOPLANTI.md) dosyası, 21 Ağustos Cuma günü yapılacak
-   hazırlık toplantısının gündemini içermektedir.
-3. Kurs günü her oturum, ilgili klasördeki yönerge dosyası takip edilerek
+2. Kurs günü her oturum, ilgili klasördeki yönerge dosyası takip edilerek
    yürütülecektir.
 
 ---
@@ -152,7 +150,10 @@ Kurs materyali CC BY 4.0 lisansı ile sunulmaktadır; bkz. [LICENSE](LICENSE).
 
 ## İletişim
 
-Kurs sekreteryası: Doç. Dr. Ayşegül Durak — `atoy@ankara.edu.tr`
+| | |
+|---|---|
+| Prof. Dr. Nazmi Yaraş | `nazmiyaras@akdeniz.edu.tr` |
+| Kurs sekreteryası — Doç. Dr. Ayşegül Durak | `atoy@ankara.edu.tr` |
 
 Depo içeriğine ilişkin teknik bildirimler için deponun *Issues* bölümü
 kullanılabilir.

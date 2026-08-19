@@ -114,10 +114,8 @@ Kendi ligandının Martini modelini oluşturması gereken katılımcılar için:
 | Souza ve ark. (2021) | *Martini 3: a general purpose force field for coarse-grained molecular dynamics.* Nature Methods, 18, 382–388. [doi:10.1038/s41592-021-01098-3](https://doi.org/10.1038/s41592-021-01098-3) |
 | [CHARMM-GUI](https://charmm-gui.org) | Tüm modüllerin belgelendirmesi |
 | [GROMACS kılavuzu](https://manual.gromacs.org/) | Komut referansı |
-| [MARTINI Odyssey Athens 2026](https://github.com/paulocts/martini-odyssey-2026) | Bu kursun materyal seçiminde referans alınan okul |
 
 ---
 
 Kendi araştırma konusuna uygun bir çalışma programı talep eden katılımcılar
-eğitmenlerle iletişime geçebilirler. Ön toplantıda belirtilen ilgi alanları
-doğrultusunda bu belgeye ekleme yapılabilecektir.
+eğitmenlerle iletişime geçebilirler.

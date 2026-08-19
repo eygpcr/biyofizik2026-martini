@@ -8,7 +8,7 @@ gerekmemektedir.
 |---|---|---|
 | 4 — Martini 3 girdi hazırlama | `04_martini_input.ipynb` | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eygpcr/biyofizik2026-martini/blob/main/notebooks/04_martini_input.ipynb) |
 | 5a — Atomistik trajektori analizi | `05a_allatom_analiz.ipynb` | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eygpcr/biyofizik2026-martini/blob/main/notebooks/05a_allatom_analiz.ipynb) |
-| 6 — Kalabalık hücresel sistemler | `06_bentopy.ipynb` | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eygpcr/biyofizik2026-martini/blob/main/notebooks/06_bentopy.ipynb) |
+| 6 — `bentopy`: kalabalık hücresel sistemler | `06_bentopy.ipynb` | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eygpcr/biyofizik2026-martini/blob/main/notebooks/06_bentopy.ipynb) |
 
 ---
 

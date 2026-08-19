@@ -1,6 +1,6 @@
 # Oturum 4 — Martini 3 Girdi Hazırlama
 
-**13:30–15:00 (90 dakika) · Dr. Öğr. Üyesi Ekrem Yaşar**
+**Dr. Öğr. Üyesi Ekrem Yaşar**
 **Model sistem: 6JOD A zinciri (AT2R) — sabah oturumunda kullanılan protein**
 
 Colab not defteri: [`notebooks/04_martini_input.ipynb`](../notebooks/04_martini_input.ipynb)
@@ -26,7 +26,7 @@ korunmaktadır.
 
 ---
 
-## Bölüm A. CHARMM-GUI Martini Maker ve kullanım sınırları (yaklaşık 15 dakika)
+## Bölüm A. CHARMM-GUI Martini Maker ve kullanım sınırları
 
 *Ekran üzerinden tanıtım; uygulama yapılmayacaktır.*
 
@@ -54,7 +54,7 @@ kursun hedeflediği ölçeğe uygun değildir.
 
 ---
 
-## Bölüm B. Komut satırı ile girdi hazırlama (yaklaşık 65 dakika)
+## Bölüm B. Komut satırı ile girdi hazırlama
 
 Uygulamanın tamamı Colab not defterinde adım adım yürütülmektedir. Aşağıdaki
 özet, işlemlerin sonradan izlenebilmesi amacıyla verilmiştir.
@@ -175,7 +175,7 @@ gmx mdrun -deffnm em -nsteps 500
 
 ---
 
-## Bölüm C. Martini modelinin sınırlılıkları (yaklaşık 10 dakika)
+## Bölüm C. Martini modelinin sınırlılıkları
 
 - **Zaman ölçeği.** Yumuşatılmış serbest enerji yüzeyi nedeniyle dinamik
   yaklaşık dört kat hızlanmaktadır. Yayınlarda etkin zaman olarak

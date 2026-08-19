@@ -1,8 +1,7 @@
 # Hesap ve Yazılım Kurulum Yönergesi
 
 Bu belgede yer alan hazırlıkların **kurs gününden önce** tamamlanması
-gerekmektedir. Hazırlıklar 21 Ağustos Cuma günü yapılacak ön toplantıda birlikte
-denetlenecektir.
+gerekmektedir.
 
 Kurs boyunca katılımcıların kendi bilgisayarlarına yazılım kurmaları
 gerekmemektedir. Tüm uygulamalar tarayıcı üzerinden yürütülecektir (CHARMM-GUI
@@ -19,8 +18,8 @@ Oturum 2 ve Oturum 3'ün tamamı bu platform üzerinde yürütülecektir.
 - Adres: https://charmm-gui.org
 - Sayfanın sağ üst köşesindeki *Register* bağlantısı kullanılarak akademik
   e-posta adresi ile ücretsiz kayıt oluşturulmalıdır.
-- **Hesap onayı bir iş günü sürebilmektedir.** Bu nedenle kaydın en geç
-  **18 Ağustos** tarihine kadar tamamlanması önerilmektedir.
+- **Hesap onayı bir iş günü sürebilmektedir.** Bu nedenle kaydın kurs
+  gününden en az bir hafta önce tamamlanması önerilmektedir.
 - **Doğrulama:** Platforma giriş yapılabildiği ve *Input Generator → Solution
   Builder* sayfasının açıldığı kontrol edilmelidir.
 
@@ -71,7 +70,7 @@ Uygulamayı kendi bilgisayarında tekrar etmek isteyen katılımcılar için:
 ## 4. Kurs öncesi okuma
 
 [01_teori](01_teori/) klasöründeki okuma listesinden bir veya iki kısa kaynağın
-incelenmesi önerilmektedir (yaklaşık 20 dakika). Listenin tamamının okunması
+incelenmesi önerilmektedir. Listenin tamamının okunması
 beklenmemektedir; amaç, kullanılacak terminolojinin kurs sabahı tanıdık
 gelmesidir.
 
@@ -108,6 +107,5 @@ kurulması yerine [WSL2](https://learn.microsoft.com/tr-tr/windows/wsl/install)
 
 ## 6. Destek
 
-Kurulum aşamasında karşılaşılan sorunlar 21 Ağustos tarihli ön toplantıda ele
-alınacaktır. Toplantı öncesinde bildirim yapmak isteyen katılımcılar deponun
-*Issues* bölümünü kullanabilirler.
+Kurulum aşamasında sorun yaşayan katılımcılar deponun *Issues* bölümünü
+kullanarak veya eğitmenlere doğrudan yazarak destek talep edebilirler.

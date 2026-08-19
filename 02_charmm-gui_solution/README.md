@@ -1,6 +1,6 @@
 # Oturum 2 — CHARMM-GUI Solution Builder
 
-**10:00–10:45 (45 dakika) · Dr. Öğr. Üyesi Ekrem Yaşar**
+**Dr. Öğr. Üyesi Ekrem Yaşar**
 **Model sistem: PDB [1AKI](https://www.rcsb.org/structure/1AKI), tavuk yumurta akı lizozimi**
 
 ---

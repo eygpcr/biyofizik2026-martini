@@ -1,6 +1,6 @@
 # Oturum 5b — Kaba-Taneli Modellerde Analiz Farklılıkları
 
-**16:00–16:20 (20 dakika) · Dr. Öğr. Üyesi Ekrem Yaşar**
+**Dr. Öğr. Üyesi Ekrem Yaşar**
 
 ---
 
@@ -30,7 +30,7 @@ yitirmektedir. Model seçimi, araştırma sorusunun seçimini de belirlemektedir
 
 ---
 
-## 1. Kaba-taneli yapıların görselleştirilmesi (yaklaşık 7 dakika)
+## 1. Kaba-taneli yapıların görselleştirilmesi
 
 Kaba-taneli yapı dosyaları doğrudan VMD ortamında açıldığında bağlar
 görüntülenmemektedir. Bunun nedeni `.gro` biçiminin bağ bilgisi taşımaması ve
@@ -51,7 +51,7 @@ mümkün olmamaktadır.
 
 ---
 
-## 2. Lipit–protein etkileşim analizi (yaklaşık 10 dakika)
+## 2. Lipit–protein etkileşim analizi
 
 Kaba-taneli modellerin en belirgin üstünlüğü bu alanda ortaya çıkmaktadır.
 Atomistik simülasyonlarda 100 ns süresince gözlenen lipit değişim sayısı
@@ -76,7 +76,7 @@ gmx select -s md.tpr -f md.xtc \
 
 ---
 
-## 3. Zaman ölçeği düzeltmesi (yaklaşık 3 dakika)
+## 3. Zaman ölçeği düzeltmesi
 
 Martini kuvvet alanının yumuşatılmış potansiyel yüzeyi difüzyonu
 hızlandırmaktadır. Su difüzyon katsayısına göre kalibre edilmiş yaklaşık dört

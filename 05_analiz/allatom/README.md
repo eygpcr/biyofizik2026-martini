@@ -1,6 +1,6 @@
 # Oturum 5a — Atomistik Trajektori Analizi
 
-**15:20–16:00 (40 dakika) · Doç. Dr. Mustafa Tekpınar**
+**Doç. Dr. Mustafa Tekpınar**
 
 Colab not defteri: [`notebooks/05a_allatom_analiz.ipynb`](../../notebooks/05a_allatom_analiz.ipynb)
 

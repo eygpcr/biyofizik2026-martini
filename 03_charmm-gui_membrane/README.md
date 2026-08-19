@@ -1,6 +1,6 @@
 # Oturum 3 — CHARMM-GUI Membrane Builder
 
-**11:00–12:15 (75 dakika) · Dr. Öğr. Üyesi Ekrem Yaşar**
+**Dr. Öğr. Üyesi Ekrem Yaşar**
 **Model sistem: PDB [6JOD](https://www.rcsb.org/structure/6JOD), anjiyotensin II tip-2 reseptörü (AT2R)**
 
 ---

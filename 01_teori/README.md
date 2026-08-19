@@ -1,6 +1,6 @@
 # Oturum 1 — Moleküler Dinamiğin Temelleri ve Ölçek Problemi
 
-**09:00–09:45 (45 dakika) · Prof. Dr. Nazmi Yaraş, Doç. Dr. Mustafa Tekpınar**
+**Prof. Dr. Nazmi Yaraş, Doç. Dr. Mustafa Tekpınar**
 
 ---
 
@@ -18,7 +18,7 @@ Bu oturumda aşağıdaki sorular ele alınmaktadır:
 
 ## İçerik
 
-### 1. Moleküler dinamiğin çalışma ilkesi (yaklaşık 15 dakika)
+### 1. Moleküler dinamiğin çalışma ilkesi
 
 - **Kuvvet alanı.** Bir moleküler sistemin potansiyel enerjisinin atom
   koordinatlarının fonksiyonu olarak ifade edilmesi: bağ gerilmesi, açı bükülmesi,
@@ -33,7 +33,7 @@ Bu oturumda aşağıdaki sorular ele alınmaktadır:
 - **Termostat ve barostat.** NVT ve NPT topluluklarında sıcaklık ve basıncın
   denetlenmesi.
 
-### 2. Ölçek problemi (yaklaşık 15 dakika)
+### 2. Ölçek problemi
 
 Atomistik simülasyonlar iki bağımsız kısıt altındadır:
 
@@ -47,7 +47,7 @@ oligomerizasyonu, lipit alanlarının oluşumu, vezikül füzyonu) mikrosaniye�
 milisaniye zaman ve 10–100 nm uzunluk aralığında gerçekleşmektedir. Bu aralık,
 atomistik simülasyonların erişim sınırının dışında kalmaktadır.
 
-### 3. Martini 3 kuvvet alanı (yaklaşık 15 dakika)
+### 3. Martini 3 kuvvet alanı
 
 - **Haritalama ilkesi.** Tipik olarak dört ağır atom tek bir etkileşim
   merkezinde (bead) temsil edilmektedir; çözücü molekülleri de aynı şekilde
@@ -81,9 +81,9 @@ kullanılacak terminolojinin tanıdık hâle gelmesi için yeterlidir.
 ### Giriş düzeyi
 
 - [Martini 3'e giriş — cgmartini.nl](https://cgmartini.nl/docs/tutorials/Martini3/ProteinsI/)
-  (yalnızca giriş bölümü, yaklaşık 10 dakika)
+  (yalnızca giriş bölümü)
 - [GROMACS: What is molecular dynamics?](https://manual.gromacs.org/current/reference-manual/introduction.html)
-  (yaklaşık 10 dakika)
+ 
 
 ### İleri düzey
 
