@@ -1,78 +1,81 @@
-# Oturum 4 — Martini 3 Input Hazırlama
+# Oturum 4 — Martini 3 Girdi Hazırlama
 
-**🕜 13:30–15:00 · 90 dk · Dr. Öğr. Üyesi Ekrem Yaşar**
-**Sistem: `6JOD` chain A (AT2R) — sabah hazırladığımız aynı protein**
+**13:30–15:00 (90 dakika) · Dr. Öğr. Üyesi Ekrem Yaşar**
+**Model sistem: 6JOD A zinciri (AT2R) — sabah oturumunda kullanılan protein**
 
-📓 **Colab notebook:** [`notebooks/04_martini_input.ipynb`](../notebooks/04_martini_input.ipynb)
+Colab not defteri: [`notebooks/04_martini_input.ipynb`](../notebooks/04_martini_input.ipynb)
 
 ---
 
-## Hedef
+## Oturumun amacı
 
-Sabah CHARMM-GUI'de tıklayarak yaptığımız işi, şimdi **terminalden** ve
-**kaba-taneli (coarse-grained)** olarak yapıyoruz.
+Sabah oturumlarında grafik arayüz üzerinden gerçekleştirilen sistem kurulumu, bu
+oturumda komut satırı araçlarıyla ve kaba-taneli çözünürlükte yeniden
+yürütülmektedir.
 
-Üreteceğimiz şey sabahkiyle aynı üçlü:
+Üretilecek dosya kümesi sabahki ile yapısal olarak aynıdır:
 
-| | Sabah (all-atom) | Şimdi (Martini) |
+| Bileşen | Atomistik (Oturum 2–3) | Kaba-taneli (bu oturum) |
 |---|---|---|
-| Koordinat | `step5_input.gro` | `sistem.gro` |
-| Topoloji | `topol.top` | `sistem.top` + `molecule_0.itp` |
-| Ayarlar | `*.mdp` | `minimization.mdp` |
+| Koordinatlar | `step5_input.gro` | `sistem.gro` |
+| Topoloji | `topol.top` | `sistem.top` ve `molecule_0.itp` |
+| Çalıştırma parametreleri | `*.mdp` | `minimization.mdp` |
 
-**Değişen sadece çözünürlük ve araç.** Mantık aynı.
-
----
-
-## Bölüm A · CHARMM-GUI Martini Maker — ve neden kullanmıyoruz · ~15 dk
-
-*(Ekrandan gösterim, uygulama yok)*
-
-CHARMM-GUI'nin **Martini Maker** diye bir modülü de var. Sabahki arayüzü
-öğrendiğiniz için kullanması kolay gelecek. Birlikte açıp bakacağız.
-
-**Ama bu kursta onu kullanmıyoruz. Nedenleri:**
-
-| Sınırlılık | Sonucu |
-|---|---|
-| Arayüz temelde **tek protein** üzerine kurgulanmış | Oligomer / çok bileşenli sistem kurmak zor |
-| Lipid kompozisyonu ve kutu boyutu arayüzün sunduğuyla sınırlı | 40–50 nm'lik yamalar pratik değil |
-| Elastic network parametreleri üzerinde **sınırlı kontrol** | Kuvvet sabiti ve kesme mesafesini ince ayarlayamazsınız |
-| Her denemede **web arayüzünü baştan doldurmak** gerekir | Tekrarlanabilirlik ve otomasyon yok |
-| Ara adımlar kapalı kutu | Bir şey ters giderse nerede olduğunu göremezsiniz |
-
-> 🎓 **Asıl mesele tekrarlanabilirlik.** Terminaldeki bir komut, makaleye
-> yazabileceğiniz, bir yıl sonra aynen tekrarlayabileceğiniz bir kayıttır.
-> Web formunda yaptığınız 40 tıklama değildir.
->
-> Martini Maker **kötü bir araç değil** — hızlı bir tek-protein testi için
-> gayet iyi. Sadece bizim gitmek istediğimiz yere götürmüyor.
+Değişen unsurlar model çözünürlüğü ve kullanılan araçlardır; iş akışının mantığı
+korunmaktadır.
 
 ---
 
-## Bölüm B · Terminalden input hazırlama · ~65 dk
+## Bölüm A. CHARMM-GUI Martini Maker ve kullanım sınırları (yaklaşık 15 dakika)
 
-Tüm bu bölüm Colab notebook'unda adım adım ilerliyor.
-Aşağıdaki özet, kursta ne yaptığımızı sonradan hatırlamanız için.
+*Ekran üzerinden tanıtım; uygulama yapılmayacaktır.*
 
-### Kullanacağımız araçlar
+CHARMM-GUI, Martini Maker adı verilen bir modül aracılığıyla kaba-taneli sistem
+kurulumu da sunmaktadır. Modül, sabah kullanılan arayüzle aynı mantıkta
+çalışmaktadır.
 
-| Araç | Ne yapar |
+Bu kursta anılan modülün kullanılmama gerekçeleri aşağıda sıralanmıştır:
+
+| Kısıt | Sonucu |
 |---|---|
-| **`martinize2`** | All-atom protein → Martini 3 kaba-taneli model + topoloji |
-| **`insane`** | Membran inşa eder, proteini gömer, su ve iyon ekler |
-| **`gmx grompp`** | Koordinat + topoloji + ayarları birleştirip `.tpr` üretir (doğrulama) |
+| Arayüzün tek protein üzerine yapılandırılmış olması | Oligomerik veya çok bileşenli sistem kurulumu güçleşmektedir |
+| Lipit bileşimi ve kutu boyutunun arayüzle sınırlı olması | 40–50 nm ölçeğindeki yamalar pratik değildir |
+| Elastik ağ parametreleri üzerinde sınırlı denetim | Kuvvet sabiti ve kesme mesafesi ayrıntılı biçimde ayarlanamamaktadır |
+| Her denemede arayüzün yeniden doldurulması gerekliliği | Tekrarlanabilirlik ve otomasyon sağlanamamaktadır |
+| Ara adımların kullanıcıya kapalı olması | Hata kaynağının belirlenmesi güçleşmektedir |
 
-### Adım 1 · Proteini hazırla
+**Kavramsal not.** Belirleyici ölçüt tekrarlanabilirliktir. Komut satırında
+yürütülen bir işlem, yayında raporlanabilen ve sonradan aynı biçimde
+tekrarlanabilen bir kayıt oluşturmaktadır; grafik arayüzde yapılan seçimler bu
+niteliği taşımamaktadır.
 
-Sadece **chain A** ile çalışacağız (ligandsız, sade bir başlangıç):
+Martini Maker modülü, tek proteinli hızlı denemeler için uygun bir araçtır;
+kursun hedeflediği ölçeğe uygun değildir.
+
+---
+
+## Bölüm B. Komut satırı ile girdi hazırlama (yaklaşık 65 dakika)
+
+Uygulamanın tamamı Colab not defterinde adım adım yürütülmektedir. Aşağıdaki
+özet, işlemlerin sonradan izlenebilmesi amacıyla verilmiştir.
+
+### Kullanılan araçlar
+
+| Araç | İşlevi |
+|---|---|
+| `martinize2` | Atomistik proteinin Martini 3 modeline ve topolojisine dönüştürülmesi |
+| `insane` | Membran inşası, proteinin yerleştirilmesi, çözücü ve iyon eklenmesi |
+| `gmx grompp` | Koordinat, topoloji ve parametre dosyalarının tutarlılığının sınanması |
+
+### Adım 1. Yapının hazırlanması
+
+Yalnızca A zinciri kullanılacaktır:
 
 ```bash
-# 6JOD'dan sadece chain A'yı al
 grep '^ATOM' 6jod.pdb | awk '$0 ~ /^.{21}A/' > at2r.pdb
 ```
 
-### Adım 2 · `martinize2` — proteini kaba-tanele
+### Adım 2. `martinize2` ile kaba-taneli modele dönüştürme
 
 ```bash
 martinize2 \
@@ -85,32 +88,33 @@ martinize2 \
   -ef 700 -el 0.5 -eu 0.9 -ea 0 -ep 0
 ```
 
-**Bayrakları birlikte açacağız:**
-
-| Bayrak | Ne yapıyor | Neden önemli |
+| Parametre | İşlevi | Önemi |
 |---|---|---|
-| `-ff martini3001` | Martini 3 kuvvet alanı | Martini 2 ile karıştırmayın |
-| `-dssp` | İkincil yapıyı belirler | Martini'de bead tipleri ikincil yapıya bağlıdır |
-| `-elastic` | Elastic network ekler | **Bunsuz protein açılır** |
-| `-ef 700` | Yay kuvvet sabiti (kJ/mol/nm²) | Çok yüksek = protein taş gibi; çok düşük = açılır |
-| `-el/-eu` | Yayların alt/üst mesafe sınırı (nm) | Hangi bead çiftleri birbirine bağlanacak |
+| `-ff martini3001` | Martini 3 kuvvet alanı seçimi | Martini 2 ile karıştırılmamalıdır |
+| `-dssp` | İkincil yapının belirlenmesi | Etkileşim merkezi tipleri ikincil yapıya bağlıdır |
+| `-elastic` | Elastik ağ tanımlanması | Uygulanmaması hâlinde protein yapısal bütünlüğünü kaybetmektedir |
+| `-ef 700` | Yay kuvvet sabiti (kJ mol⁻¹ nm⁻²) | Yüksek değerler proteini aşırı rijitleştirmekte, düşük değerler yapıyı koruyamamaktadır |
+| `-el` / `-eu` | Yay tanımlanacak mesafe aralığı (nm) | Hangi merkez çiftlerinin bağlanacağını belirlemektedir |
 
-> 🎓 **Elastic network neden gerekli?**
-> Martini, proteinin ikincil ve üçüncül yapısını **koruyamaz** — bead'ler
-> arasındaki etkileşimler bunu tutmaya yetmez. Çözüm: yapıyı bir yay ağıyla
-> dışarıdan sabitlemek.
->
-> Bedeli büyük: **proteininiz artık katlanamaz, açılamaz, büyük konformasyonel
-> değişim yapamaz.** Martini ile bir GPCR'ın aktivasyon geçişini inceleyemezsiniz.
-> İnceleyebileceğiniz şey: lipidlerle etkileşimi, oligomerleşmesi, difüzyonu.
->
-> **Aracın ne yapamadığını bilmek, ne yapabildiğini bilmek kadar önemlidir.**
+**Kavramsal not: elastik ağın gerekliliği.** Martini kuvvet alanı, etkileşim
+merkezleri arasındaki potansiyeller aracılığıyla proteinin ikincil ve üçüncül
+yapısını koruyamamaktadır. Yapı, harmonik yaylardan oluşan bir ağ ile
+kısıtlanmaktadır.
 
-**Çıktılar:** `at2r_cg.pdb` (CG koordinatlar), `topol.top`, `molecule_0.itp`
+Bu yaklaşımın bedeli önemlidir: model protein katlanma, açılma ve büyük ölçekli
+konformasyonel değişim gösteremez. Dolayısıyla Martini ile bir GPCR'ın
+aktivasyon geçişi incelenemez. İncelenebilecek süreçler lipit etkileşimleri,
+oligomerizasyon ve difüzyondur.
 
-> 🔍 Kaç atomdan kaç bead'e indik? Oranı hesaplayın.
+Bir modelleme aracının uygulanamayacağı sorulara ilişkin farkındalık,
+uygulanabileceği sorulara ilişkin bilgi kadar belirleyicidir.
 
-### Adım 3 · `insane` — membran, su, iyon
+**Çıktılar:** `at2r_cg.pdb`, `topol.top`, `molecule_0.itp`
+
+**Tartışma sorusu.** Atom sayısından etkileşim merkezi sayısına indirgeme oranı
+nedir?
+
+### Adım 3. `insane` ile membran, çözücü ve iyon eklenmesi
 
 ```bash
 insane \
@@ -125,46 +129,45 @@ insane \
   -center
 ```
 
-| Bayrak | Ne yapıyor |
+| Parametre | İşlevi |
 |---|---|
-| `-box 12,12,14` | Kutu boyutu (nm). Sabahki sistemle karşılaştırın |
-| `-l POPC:1` | Lipid kompozisyonu. `-l POPC:7 -l POPE:2 -l CHOL:1` de yazılabilir |
-| `-sol W` | Martini standart suyu (1 bead ≈ 4 su molekülü) |
+| `-box 12,12,14` | Kutu boyutları (nm) |
+| `-l POPC:1` | Lipit bileşimi; çok bileşenli tanım için `-l POPC:7 -l POPE:2 -l CHOL:1` |
+| `-sol W` | Martini standart su modeli (bir merkez yaklaşık dört su molekülünü temsil etmektedir) |
 | `-salt 0.15` | 0.15 M NaCl |
-| `-center` | Proteini kutuya ortala |
+| `-center` | Proteinin kutu merkezine yerleştirilmesi |
 
-> 🔍 **Karşılaştırma anı:** 12×12×14 nm'lik bu sistem kaç parçacık?
-> Sabahki all-atom sistem aynı hacimde kaç atom olurdu?
+**Tartışma sorusu.** Bu sistemin parçacık sayısı nedir? Aynı hacimdeki atomistik
+bir sistem kaç atom içerecekti?
 
-### Adım 4 · Topolojiyi düzelt
+### Adım 4. Topoloji dosyasının düzeltilmesi
 
-`insane`, `sistem.top` dosyasını üretir ama Martini kuvvet alanı `#include`
-satırlarını sizin eklemeniz gerekir. Bu **en sık takılınan adımdır** —
-notebook'ta birlikte yapacağız.
+`insane` aracı topoloji dosyasını üretmekte, ancak kuvvet alanı `#include`
+satırlarının kullanıcı tarafından eklenmesi gerekmektedir. Bu adım, iş akışında
+en sık hata alınan noktadır.
 
 ```
 #include "martini_v3.0.0.itp"
 #include "martini_v3.0.0_solvents_v1.itp"
 #include "martini_v3.0.0_ions_v1.itp"
-#include "molecule_0.itp"      ← martinize2'nin ürettiği protein topolojisi
+#include "molecule_0.itp"
 #include "martini_v3.0.0_phospholipids_v1.itp"
 ```
 
-### Adım 5 · `gmx grompp` ile doğrula
+### Adım 5. `gmx grompp` ile doğrulama
 
 ```bash
 gmx grompp -f minimization.mdp -c sistem.gro -p sistem.top -o em.tpr -maxwarn 1
 ```
 
-**Bu adım simülasyon koşmuyor** — sadece "sisteminiz tutarlı mı?" diye soruyor.
-`.tpr` dosyası üretilebildiyse input'unuz geçerli demektir.
+Bu adımda simülasyon yürütülmemekte, koordinat, topoloji ve parametre
+dosyalarının birbiriyle tutarlılığı sınanmaktadır. `.tpr` dosyasının
+üretilebilmesi girdinin geçerli olduğunu göstermektedir.
 
-> ⚠️ Hata alırsanız panik yok — Martini'de en sık görülen hatalar ve çözümleri
-> notebook'un sonunda listelendi. Hata mesajını okumayı öğrenmek, işin yarısıdır.
+Sık karşılaşılan hata iletileri ve çözümleri not defterinin sonunda
+listelenmiştir.
 
-### Adım 6 (opsiyonel) · Kısa enerji minimizasyonu
-
-Vakit kalırsa, birkaç saniye süren bir EM koşup sistemin çökmediğini göreceğiz:
+### Adım 6 (isteğe bağlı). Kısa enerji minimizasyonu
 
 ```bash
 gmx mdrun -deffnm em -nsteps 500
@@ -172,32 +175,35 @@ gmx mdrun -deffnm em -nsteps 500
 
 ---
 
-## Bölüm C · Martini neyi doğru vermez? · ~10 dk
+## Bölüm C. Martini modelinin sınırlılıkları (yaklaşık 10 dakika)
 
-Kapanışta, aracın sınırlarını konuşuyoruz:
+- **Zaman ölçeği.** Yumuşatılmış serbest enerji yüzeyi nedeniyle dinamik
+  yaklaşık dört kat hızlanmaktadır. Yayınlarda etkin zaman olarak
+  belirtilmelidir.
+- **Konformasyonel değişim.** Elastik ağ nedeniyle katlanma ve büyük ölçekli
+  yapısal geçişler incelenememektedir.
+- **Çözücü modeli.** Standart Martini suyu donma eğilimi göstermektedir;
+  antifriz parçacığı veya polarize su modeli gerekebilmektedir.
+- **Elektrostatik etkileşimler.** Yaklaşık olarak ele alınmaktadır; yüksek yük
+  yoğunluklu sistemlerde dikkatli değerlendirme gerekmektedir.
+- **Hidrojen bağları.** Yönelim bilgisi bulunmadığından hidrojen bağı ağına
+  ilişkin sorular yanıtlanamamaktadır.
 
-- ⏱️ **Zaman ölçeği "gerçek" değil.** Pürüzsüzleşmiş enerji manzarası nedeniyle
-  dinamik ~4× hızlanır. Yayınlarda "efektif zaman" olarak belirtin.
-- 🧊 **Protein katlanması / büyük konformasyonel değişim yok** (elastic network).
-- 💧 **Standart Martini suyu donabilir.** Antifriz bead'i veya polarize su gerekebilir.
-- ⚡ **Elektrostatik yaklaşıktır.** Yüksek yüklü sistemlerde dikkat.
-- 🔬 **Hidrojen bağı yönelimi yok.** Spesifik H-bağı sorularına cevap veremez.
-
-📖 Tamamı: [Notes and Limitations — cgmartini.nl](https://cgmartini.nl/docs/tutorials/Martini3/ProteinsI/Tut4.html)
-
----
-
-## 📚 Bu oturumun dayandığı tutorial'lar
-
-Aşağıdaki resmî tutorial'lardan uyarlanmıştır. Kurstan sonra tamamını
-çalışmanızı öneririz:
-
-- 🔗 [Martini Protein Model — Using Martinize2](https://cgmartini.nl/docs/tutorials/Martini3/ProteinsI/Tut1.html)
-- 🔗 [Modeling Complex Lipid Membranes — INSANE](https://cgmartini.nl/docs/tutorials/Martini3/LipidsII/)
+Ayrıntılı liste: [Notes and Limitations](https://cgmartini.nl/docs/tutorials/Martini3/ProteinsI/Tut4.html)
 
 ---
 
-## 🆘 Takılırsanız
+## Kaynaklar
 
-Her adımın hazır çıktısı [`cikti/`](cikti/) klasöründe. Bir adımda
-takılırsanız oradan devam edin — akışı kaçırmayın, sonra geri döneriz.
+Bu oturum aşağıdaki resmî öğretim materyallerinden uyarlanmıştır:
+
+- [Martini Protein Model — Using Martinize2](https://cgmartini.nl/docs/tutorials/Martini3/ProteinsI/Tut1.html)
+- [Modeling Complex Lipid Membranes — INSANE](https://cgmartini.nl/docs/tutorials/Martini3/LipidsII/)
+
+---
+
+## Sorun giderme
+
+Her adımın önceden üretilmiş çıktısı [`cikti/`](cikti/) klasöründe
+bulunmaktadır. Bir adımda sorun yaşanması hâlinde oturum akışının kesintiye
+uğramaması için bu dosyalardan devam edilmesi önerilmektedir.

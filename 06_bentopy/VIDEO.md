@@ -1,33 +1,26 @@
-# Bentopy Uygulama Videosu
+# `bentopy` Uygulama Kaydı
 
-Oturum 6'da vakit yetmezse veya kurulumda takılırsak, uygulamanın tamamını
-baştan sona anlatan bir video kaydı bırakıyoruz.
+Oturum 6'da süre yetersizliği veya kurulum kaynaklı sorunlar oluşması hâlinde
+kullanılmak üzere, uygulamanın tamamını içeren bir video kaydı hazırlanmıştır.
 
----
+- **Bağlantı:** kurs öncesinde bu belgeye eklenecektir
+- **Süre:** yaklaşık 20 dakika
 
-## 🎬 Video
-
-> **Bağlantı:** *(kurstan önce buraya eklenecek)*
->
-> **Süre:** ~20 dk
-
-## İçerik
+## İçerik dizini
 
 | Dakika | Konu |
 |---|---|
-| 00:00 | bentopy nedir, ne zaman gerekir |
+| 00:00 | `bentopy` aracının kapsamı ve kullanım alanları |
 | 02:00 | Kurulum |
-| 05:00 | `yerlesim.json` — yerleşim tanımını yazmak |
-| 10:00 | `bentopy pack` — yerleşim planını üretmek |
-| 13:00 | `bentopy render` — koordinatları üretmek |
-| 16:00 | `bentopy solvate` — su ve iyon eklemek |
-| 18:00 | Sonucu görselleştirmek ve kontrol etmek |
+| 05:00 | `yerlesim.json` yapılandırma dosyasının hazırlanması |
+| 10:00 | `bentopy pack` — yerleşim planının üretilmesi |
+| 13:00 | `bentopy render` — koordinatların üretilmesi |
+| 16:00 | `bentopy solvate` — çözücü ve iyon eklenmesi |
+| 18:00 | Sonucun görselleştirilmesi ve denetimi |
 
----
+## Birlikte kullanılacak materyaller
 
-## Videoyla birlikte kullanın
+- Komutlar ve yapılandırma şablonu: [`kodlar/`](kodlar/)
+- Colab not defteri: [`../notebooks/06_bentopy.ipynb`](../notebooks/06_bentopy.ipynb)
 
-- 📁 Tüm komutlar ve JSON şablonu: [`kodlar/`](kodlar/)
-- 📓 Colab notebook: [`../notebooks/06_bentopy.ipynb`](../notebooks/06_bentopy.ipynb)
-
-Takıldığınız yer olursa deponun **Issues** sekmesinden yazabilirsiniz.
+Sorular ve bildirimler için deponun *Issues* bölümü kullanılabilir.

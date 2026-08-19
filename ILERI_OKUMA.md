@@ -1,117 +1,123 @@
-# İleri Okuma — Kurstan Sonra Nereden Devam Edilir?
+# İleri Okuma ve Çalışma Kaynakları
 
-Tek günde her şeyi yapmak mümkün değildi. Bu sayfa, kursta **kasıtlı olarak
-kapsam dışı bıraktığımız** konuları ve bunlara nereden devam edebileceğinizi
-topluyor.
-
-Neyi neden çıkardığımızı da yazdık — böylece hangisinin sizin işinize
-yarayacağına kendiniz karar verebilirsiniz.
+Bir günlük kurs süresi içinde ele alınması mümkün olmayan konular bu belgede
+derlenmiştir. Her başlık için kapsam dışı bırakılma gerekçesi belirtilmiş olup,
+katılımcıların kendi araştırma alanlarına göre seçim yapabilmeleri
+amaçlanmıştır.
 
 ---
 
-## ⭐ Önce buradan başlayın
+## 1. Öncelikli olarak önerilen konular
 
-### GPCR–ligand bağlanma simülasyonları (Martini 3)
-Kursta AT2R'yi membrana gömdük ama **bağlanma sürecini** simüle etmedik.
-Doğal bir sonraki adım tam olarak bu:
+### 1.1. GPCR–ligant bağlanma simülasyonları (Martini 3)
 
-- 🔗 [Adenozin A2 reseptörüne kafein bağlanması](https://github.com/M2BMI-Lab/Workshop-MartiniOdyssey/blob/main/Tutorial-Simulation-with-GPCR-AutoMartiniM3-MartiniOdyssey.md)
+Kursta AT2R lipit çift tabakasına yerleştirilmiş, ancak bağlanma süreci
+simüle edilmemiştir. Doğrudan devam niteliğindeki kaynak:
 
-Kursta öğrendiğiniz `martinize2` + `insane` akışının üzerine doğrudan oturuyor.
-Bir GPCR ile çalışıyorsanız buradan devam edin.
+- [Adenozin A2 reseptörüne kafein bağlanması](https://github.com/M2BMI-Lab/Workshop-MartiniOdyssey/blob/main/Tutorial-Simulation-with-GPCR-AutoMartiniM3-MartiniOdyssey.md)
 
-### Martini'nin sınırlılıkları
-Kursta 10 dakika değindik. Tamamını okumak, ilerideki birçok hatadan kurtarır:
+Bu materyal, kursta öğrenilen `martinize2` ve `insane` iş akışı üzerine
+kurulmaktadır. GPCR sistemleriyle çalışan katılımcılar için en uygun devam
+noktasıdır.
 
-- 🔗 [Notes and Limitations](https://cgmartini.nl/docs/tutorials/Martini3/ProteinsI/Tut4.html)
+### 1.2. Martini modelinin sınırlılıkları
 
----
+Oturum 4'te özet olarak ele alınmıştır. Tam metnin incelenmesi, ileride
+karşılaşılabilecek yorumlama hatalarının önlenmesi açısından önerilmektedir.
 
-## 🧪 Simülasyon koşmayı öğrenmek
-
-Kursun kapsamı input hazırlamaydı. Simülasyonu gerçekten koşmak isterseniz:
-
-- 🔗 [Membran kendiliğinden oluşumu (self-assembly)](https://cgmartini.nl/docs/tutorials/Martini3/LipidsI/) —
-  Martini'nin en görsel demosu: dağınık lipidlerden çift tabaka oluşumu. Mikrosaniye
-  mertebesinde CG simülasyon gerektirir.
-- 🔗 [Transmembran peptit simülasyonları](https://cgmartini.nl/docs/tutorials/Martini3/ProteinsIIa/) —
-  `martinize2` + `insane`'i birleştiren en küçük uçtan uca örnek. Kursta yedek
-  senaryomuzdu; kendi başınıza koşmak için ideal boyutta.
-- 🔗 [GROMACS resmî tutorial'ları](https://tutorials.gromacs.org/) — all-atom tarafı için
+- [Notes and Limitations](https://cgmartini.nl/docs/tutorials/Martini3/ProteinsI/Tut4.html)
 
 ---
 
-## 🧬 Protein modellemede derinleşme
+## 2. Simülasyon yürütme
 
-- 🔗 [Martini protein modeline giriş](https://cgmartini.nl/docs/tutorials/Martini3/ProteinsI/) —
-  Oturum 4'ün teorik arka planı
-- 🔗 [Protein modelinin kalitesini değerlendirme](https://cgmartini.nl/docs/tutorials/Martini3/ProteinsI/Tut2.html) —
-  elastic network parametrelerinizin makul olup olmadığını nasıl anlarsınız
-- 🔗 [Protein kompleksleri](https://cgmartini.nl/docs/tutorials/Martini3/ProteinsIIb/) —
-  **GPCR oligomerizasyonu** ile ilgileniyorsanız buraya bakın
-- 🔗 [Düzensiz bölgeler (IDR)](https://cgmartini.nl/docs/tutorials/Martini3/ProteinsI/Tut3.html) —
-  elastic network'ün işe yaramadığı durumlar
+Kursun kapsamı girdi hazırlama ile sınırlı tutulmuştur. Simülasyon yürütmeye
+ilişkin kaynaklar:
 
----
-
-## 🧫 Membran ve lipid sistemleri
-
-- 🔗 [COBY](https://github.com/MikkelDA/COBY/tree/master/Tutorial) — `insane`'e modern
-  alternatif. Daha esnek, daha çok lipid desteği. Kursta ikinci bir araç öğretmek
-  kafa karıştırıcı olacağı için çıkardık; `insane`'i öğrendikten sonra geçiş kolay.
-- 🔗 [TS2CG v2.0](https://github.com/weria-pezeshkian/TS2CG-v2.0/wiki/Tutorial) —
-  vezikül, tübül, karmaşık membran şekilleri
-- 🔗 [Lipid nanopartikül (LNP) modelleme](https://zenodo.org/records/19632806) —
-  ilaç taşıyıcı sistemlerle çalışıyorsanız
+- [Membran kendiliğinden oluşumu](https://cgmartini.nl/docs/tutorials/Martini3/LipidsI/) —
+  dağınık lipitlerden çift tabaka oluşumu. Mikrosaniye mertebesinde kaba-taneli
+  simülasyon gerektirdiğinden kapsam dışı bırakılmıştır.
+- [Transmembran peptit simülasyonları](https://cgmartini.nl/docs/tutorials/Martini3/ProteinsIIa/) —
+  `martinize2` ve `insane` araçlarını birleştiren en küçük ölçekli uçtan uca
+  örnek. Kursta yedek uygulama olarak öngörülmüştür.
+- [GROMACS öğretim materyalleri](https://tutorials.gromacs.org/) — atomistik
+  simülasyonlar için
 
 ---
 
-## 📊 Analiz araçları
+## 3. Protein modellemesinde derinleşme
 
-Oturum 5'te temel `gmx` analizlerini gördük. Lipid–protein etkileşimlerine
-odaklanan özel araçlar:
-
-- 🔗 [ProLint2](https://cgmartini.nl/docs/tutorials/Martini3/ProLint/) —
-  lipid–protein temas analizi, interaktif web arayüzü. Kurulumu biraz ağır olduğu
-  için kursta sadece gösterdik.
-- 🔗 [PyLipID](https://pylipid.readthedocs.io/en/master/tutorial.html) —
-  Jupyter tabanlı, bağlanma bölgesi ve rezidans süresi analizi
-- 🔗 [MartiniGlass](https://martiniglass.readthedocs.io/) —
-  CG yapıları VMD'de **doğru** görselleştirmek için. Kısacık ama vazgeçilmez.
+- [Martini protein modeline giriş](https://cgmartini.nl/docs/tutorials/Martini3/ProteinsI/) —
+  Oturum 4'ün kuramsal arka planı
+- [Protein modelinin niteliğinin değerlendirilmesi](https://cgmartini.nl/docs/tutorials/Martini3/ProteinsI/Tut2.html) —
+  elastik ağ parametrelerinin uygunluğunun sınanması
+- [Protein kompleksleri](https://cgmartini.nl/docs/tutorials/Martini3/ProteinsIIb/) —
+  GPCR oligomerizasyonu üzerine çalışan katılımcılar için
+- [Düzensiz bölgeler (IDR)](https://cgmartini.nl/docs/tutorials/Martini3/ProteinsI/Tut3.html) —
+  elastik ağ yaklaşımının uygulanamadığı durumlar
 
 ---
 
-## ⚗️ Küçük molekül parametrizasyonu
+## 4. Membran ve lipit sistemleri
 
-Kendi ligandınızın Martini modelini kurmanız gerekiyorsa:
-
-- 🔗 [Manuel parametrizasyon](https://cgmartini.nl/docs/tutorials/Martini3/Small_Molecule_Parametrization/) —
-  mantığı öğrenmek için
-- 🔗 [Auto-MartiniM3](https://github.com/M2BMI-Lab/Workshop-MartiniOdyssey/blob/main/Tutorial-Parametrization-AutoMartiniM3-MartiniOdyssey.md) —
-  otomatik yol
-
----
-
-## 🎯 İleri seviye
-
-- 🔗 [Serbest enerji teknikleri](https://cgmartini.nl/docs/tutorials/Martini3/Free_Energy_Techniques/) —
-  bağlanma serbest enerjisi, membran geçiş bariyerleri
-- 🔗 [bentopy](https://cgmartini.nl/docs/tutorials/Martini3/Bentopy/) — Oturum 6'nın
-  tam tutorial'ı, kursta değinemediğimiz kısımlarıyla
+- [COBY](https://github.com/MikkelDA/COBY/tree/master/Tutorial) — `insane`
+  aracına güncel bir alternatif; daha esnek yapılandırma ve daha geniş lipit
+  desteği sunmaktadır. Kursta ikinci bir aracın öğretilmesi bilişsel yükü
+  artıracağı için kapsam dışı bırakılmıştır.
+- [TS2CG v2.0](https://github.com/weria-pezeshkian/TS2CG-v2.0/wiki/Tutorial) —
+  vezikül, tübül ve karmaşık geometrili membran yapıları
+- [Lipit nanopartikül modellemesi](https://zenodo.org/records/19632806) — ilaç
+  taşıyıcı sistemler
 
 ---
 
-## 📖 Genel kaynaklar
+## 5. Analiz araçları
 
-| | |
+Oturum 5'te temel GROMACS analiz araçları ele alınmıştır. Lipit–protein
+etkileşimlerine özelleşmiş araçlar:
+
+- [ProLint2](https://cgmartini.nl/docs/tutorials/Martini3/ProLint/) —
+  lipit–protein temas analizi ve etkileşimli görselleştirme arayüzü. Kurulum
+  gereksinimleri nedeniyle kursta yalnızca tanıtılmıştır.
+- [PyLipID](https://pylipid.readthedocs.io/en/master/tutorial.html) — bağlanma
+  bölgesi belirleme ve rezidans süresi analizi
+- [MartiniGlass](https://martiniglass.readthedocs.io/) — kaba-taneli yapıların
+  VMD ortamında doğru görselleştirilmesi
+
+---
+
+## 6. Küçük molekül parametrizasyonu
+
+Kendi ligandının Martini modelini oluşturması gereken katılımcılar için:
+
+- [Elle parametrizasyon](https://cgmartini.nl/docs/tutorials/Martini3/Small_Molecule_Parametrization/) —
+  yöntemin ilkelerini kavramak amacıyla
+- [Auto-MartiniM3](https://github.com/M2BMI-Lab/Workshop-MartiniOdyssey/blob/main/Tutorial-Parametrization-AutoMartiniM3-MartiniOdyssey.md) —
+  otomatik parametrizasyon
+
+---
+
+## 7. İleri düzey konular
+
+- [Serbest enerji teknikleri](https://cgmartini.nl/docs/tutorials/Martini3/Free_Energy_Techniques/) —
+  bağlanma serbest enerjisi ve membran geçiş bariyerlerinin hesaplanması
+- [bentopy](https://cgmartini.nl/docs/tutorials/Martini3/Bentopy/) — Oturum 6'nın
+  tam öğretim materyali
+
+---
+
+## 8. Genel başvuru kaynakları
+
+| Kaynak | Açıklama |
 |---|---|
-| [cgmartini.nl](https://cgmartini.nl/) | Martini'nin resmî sitesi — tutorial, kuvvet alanı dosyaları, forum |
-| [Martini 3 makalesi](https://doi.org/10.1038/s41592-021-01098-3) | Souza et al., *Nature Methods* (2021) |
-| [CHARMM-GUI](https://charmm-gui.org) | Tüm builder'ların dokümantasyonu |
+| [cgmartini.nl](https://cgmartini.nl/) | Martini kuvvet alanının resmî sitesi; öğretim materyalleri, parametre dosyaları ve tartışma forumu |
+| Souza ve ark. (2021) | *Martini 3: a general purpose force field for coarse-grained molecular dynamics.* Nature Methods, 18, 382–388. [doi:10.1038/s41592-021-01098-3](https://doi.org/10.1038/s41592-021-01098-3) |
+| [CHARMM-GUI](https://charmm-gui.org) | Tüm modüllerin belgelendirmesi |
 | [GROMACS kılavuzu](https://manual.gromacs.org/) | Komut referansı |
-| [MARTINI Odyssey Athens 2026](https://github.com/paulocts/martini-odyssey-2026) | Bu kursun materyal seçiminde referans aldığımız okul |
+| [MARTINI Odyssey Athens 2026](https://github.com/paulocts/martini-odyssey-2026) | Bu kursun materyal seçiminde referans alınan okul |
 
 ---
 
-*Kendi araştırmanıza uygun bir yol haritası isterseniz eğitmenlere yazabilirsiniz —
-ön toplantıda konuştuğumuz ilgi alanlarına göre buraya ekleme yapabiliriz.*
+Kendi araştırma konusuna uygun bir çalışma programı talep eden katılımcılar
+eğitmenlerle iletişime geçebilirler. Ön toplantıda belirtilen ilgi alanları
+doğrultusunda bu belgeye ekleme yapılabilecektir.

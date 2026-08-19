@@ -1,9 +1,9 @@
-# `insane` — komut referansı
+# `insane` — Komut Referansı
 
-Membran inşa eder, proteini gömer, su ve iyon ekler.
-*(INSert membrANE)*
+Lipit çift tabakasının inşası, proteinin yerleştirilmesi, çözücü ve iyon
+eklenmesi. *(INSert membrANE)*
 
-## Kurstaki komut
+## Oturumda kullanılan komut
 
 ```bash
 insane \
@@ -19,41 +19,41 @@ insane \
   -dm 0
 ```
 
-## Bayraklar
+## Parametreler
 
-| Bayrak | Ne yapar |
+| Parametre | İşlevi |
 |---|---|
-| `-f` | gömülecek protein (kaba-taneli) |
-| `-o` | çıktı koordinat dosyası |
-| `-p` | çıktı topolojisi *(eksik `#include`'ları siz ekleyeceksiniz)* |
-| `-box x,y,z` | kutu boyutu (nm) |
-| `-pbc` | kutu tipi: `square`, `rectangular`, `hexagonal`, `cubic` |
-| `-l LIPID:oran` | lipid kompozisyonu — birden çok kez yazılabilir |
-| `-u LIPID:oran` | **üst** yaprakçık (asimetrik membran için) |
-| `-sol W` | çözücü — `W` standart Martini suyu |
-| `-salt 0.15` | tuz derişimi (M) |
-| `-center` | proteini kutuya ortala |
-| `-dm` | proteinin membrana göre z kayması (nm) |
-| `-d` | protein ile kutu kenarı arası mesafe (nm) |
+| `-f` | Yerleştirilecek protein (kaba-taneli) |
+| `-o` | Çıktı koordinat dosyası |
+| `-p` | Çıktı topolojisi (`#include` yönergeleri kullanıcı tarafından eklenmelidir) |
+| `-box x,y,z` | Kutu boyutları (nm) |
+| `-pbc` | Kutu geometrisi: `square`, `rectangular`, `hexagonal`, `cubic` |
+| `-l LIPİT:oran` | Lipit bileşimi; birden çok kez tanımlanabilir |
+| `-u LIPİT:oran` | Üst yaprakçık bileşimi (asimetrik çift tabaka için) |
+| `-sol W` | Çözücü modeli; `W` standart Martini suyunu belirtmektedir |
+| `-salt 0.15` | Tuz derişimi (M) |
+| `-center` | Proteinin kutu merkezine yerleştirilmesi |
+| `-dm` | Proteinin membran düzlemine göre z ekseninde ötelenmesi (nm) |
+| `-d` | Protein ile kutu sınırı arasındaki asgari mesafe (nm) |
 
-## Lipid kompozisyonu örnekleri
+## Lipit bileşimi örnekleri
 
 ```bash
-# Basit, standart membran
+# Tek bileşenli referans membran
 -l POPC:1
 
-# Plazma membranına daha yakın
+# Plazma membranı bileşimine yaklaştırılmış karışım
 -l POPC:7 -l POPE:2 -l CHOL:1
 
-# Asimetrik çift tabaka (alt / üst yaprakçık farklı)
--l POPC:7 -l POPS:3  -u POPC:9 -l CHOL:1
+# Asimetrik çift tabaka (alt ve üst yaprakçık farklı bileşimde)
+-l POPC:7 -l POPS:3 -u POPC:9 -u CHOL:1
 ```
 
-## ⚠️ En sık yapılan hata
+## Sık karşılaşılan sorun
 
-`insane`'in ürettiği `.top` dosyası **eksiktir** — kuvvet alanı `#include`
-satırları yoktur, protein molekülünün adı `martinize2`nin ürettiğiyle
-uyuşmayabilir. Doğrusunu elle yazmanız gerekir:
+`insane` tarafından üretilen topoloji dosyası eksiktir. Kuvvet alanı `#include`
+yönergeleri bulunmamakta ve protein molekülünün adı `martinize2` çıktısıyla
+uyuşmayabilmektedir. Dosyanın aşağıdaki biçimde tamamlanması gerekmektedir:
 
 ```
 #include "martini_v3.0.0.itp"
@@ -73,6 +73,9 @@ NA           25
 CL           25
 ```
 
-> 💡 Notebook'taki 6. bölüm bu düzeltmeyi otomatik yapıyor.
+Colab not defterinin altıncı bölümü bu düzeltmeyi otomatik olarak
+gerçekleştirmektedir.
 
-📖 [Resmî tutorial](https://cgmartini.nl/docs/tutorials/Martini3/LipidsII/)
+## Kaynak
+
+[Modeling Complex Lipid Membranes — INSANE](https://cgmartini.nl/docs/tutorials/Martini3/LipidsII/)

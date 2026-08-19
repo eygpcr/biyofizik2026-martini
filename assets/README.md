@@ -1,3 +1,3 @@
-# Görseller
+# Görsel Materyaller
 
-Depoda kullanılan banner, şema ve ekran görüntüleri.
+Depoda kullanılan şema, çizim ve ekran görüntüleri bu dizinde yer almaktadır.

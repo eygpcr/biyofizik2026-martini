@@ -1,104 +1,111 @@
-# Oturum 5b — Martini'de Analiz Nasıl Değişir?
+# Oturum 5b — Kaba-Taneli Modellerde Analiz Farklılıkları
 
-**🕓 16:00–16:20 · 20 dk · Dr. Öğr. Üyesi Ekrem Yaşar**
-
----
-
-## Hedef
-
-5a'da all-atom trajektoriye baktık. Aynı analizleri Martini'ye uyguladığımızda
-**neyin aynı kaldığını, neyin değiştiğini ve neyin tamamen anlamsızlaştığını**
-göreceğiz.
+**16:00–16:20 (20 dakika) · Dr. Öğr. Üyesi Ekrem Yaşar**
 
 ---
 
-## Analiz analiz karşılaştırma
+## Oturumun amacı
 
-| Analiz | Martini'de durum | Not |
+Oturum 5a'da atomistik trajektoriler üzerinde uygulanan analizlerin, kaba-taneli
+modellere aktarılması hâlinde hangilerinin geçerliliğini koruduğu, hangilerinin
+yorumunun değiştiği ve hangilerinin uygulanamaz hâle geldiği değerlendirilmektedir.
+
+---
+
+## Analiz yöntemlerinin karşılaştırılması
+
+| Analiz | Martini modelinde durumu | Açıklama |
 |---|---|---|
-| **RMSD** | ⚠️ Çalışır ama **yorumu farklı** | Elastic network yapıyı zaten sabitliyor; düşük RMSD "protein kararlı" demek değil, "yaylar işini yapıyor" demek |
-| **RMSF** | ✅ Anlamlı | Hangi bölgelerin esnek olduğu hâlâ bilgi verir — ama elastic network'ün etkisi altında |
-| **Rg** | ✅ Çalışır | Elastic network yüzünden neredeyse sabit çıkar |
-| **Hidrojen bağı** | ❌ **Mümkün değil** | Martini'de hidrojen yok. `gmx hbond` çalıştıramazsınız |
-| **Yoğunluk profili** | ✅ Çok iyi çalışır | Membran analizi Martini'nin en güçlü olduğu alan |
-| **Lipid–protein teması** | ⭐ **Asıl güçlü yanı** | Uzun sürelere erişebildiğiniz için istatistik anlamlı hale gelir |
-| **Difüzyon / MSD** | ⚠️ Çalışır ama ölçek düzeltmesi gerekir | Martini dinamiği ~4× hızlıdır |
+| RMSD | Hesaplanabilir, yorumu farklıdır | Elastik ağ yapıyı kısıtladığından düşük RMSD değeri proteinin kararlılığını değil, kısıtlamanın etkinliğini yansıtmaktadır |
+| RMSF | Anlamlıdır | Bölgesel esneklik bilgisi korunmakta, ancak elastik ağın etkisi altında değerlendirilmelidir |
+| Jirasyon yarıçapı | Hesaplanabilir | Elastik ağ nedeniyle yaklaşık sabit kalmaktadır |
+| Hidrojen bağı | Uygulanamaz | Modelde hidrojen atomu bulunmamaktadır |
+| Yoğunluk profili | Uygulanabilir ve bilgilendiricidir | Membran analizi Martini modelinin en güçlü uygulama alanıdır |
+| Lipit–protein teması | Yöntemin ayırt edici üstünlüğüdür | Erişilebilen zaman ölçeği istatistiksel anlamlılık sağlamaktadır |
+| Difüzyon ve MSD | Ölçek düzeltmesi gerektirmektedir | Martini dinamiği yaklaşık dört kat hızlıdır |
 
-> 🎓 **Ana fikir:** Martini'de aynı komutları koşabilirsiniz — ama bazı
-> soruların **cevabı artık anlamlı değildir**. Aracı seçerken sorunuzu
-> seçmiş olursunuz.
+**Değerlendirme.** Kaba-taneli modellerde aynı analiz komutları
+çalıştırılabilmekte, ancak bazı soruların yanıtları fiziksel anlamını
+yitirmektedir. Model seçimi, araştırma sorusunun seçimini de belirlemektedir.
 
 ---
 
-## 1 · Görselleştirme: MartiniGlass · ~7 dk
+## 1. Kaba-taneli yapıların görselleştirilmesi (yaklaşık 7 dakika)
 
-CG yapıyı doğrudan VMD'de açarsanız **bağlar görünmez** — çünkü `.gro` dosyası
-bağ bilgisi taşımaz, VMD de bead'ler arası mesafeden bağ tahmin edemez.
-Protein bir "nokta bulutu" gibi görünür.
+Kaba-taneli yapı dosyaları doğrudan VMD ortamında açıldığında bağlar
+görüntülenmemektedir. Bunun nedeni `.gro` biçiminin bağ bilgisi taşımaması ve
+etkileşim merkezleri arası mesafelerin bağ tahmini için uygun olmamasıdır. Yapı
+bağlantısız bir nokta kümesi olarak görüntülenmektedir.
 
-**Çözüm:** [MartiniGlass](https://martiniglass.readthedocs.io/) — topolojiden
-bağ bilgisini okuyup VMD'nin anlayacağı dosyaları üretir.
+Çözüm olarak [MartiniGlass](https://martiniglass.readthedocs.io/) aracı
+kullanılmaktadır; topoloji dosyasından bağ bilgisini okuyarak VMD ile uyumlu
+dosyalar üretmektedir.
 
 ```bash
 pip install martiniglass
 martiniglass -p sistem.top
 ```
 
-> 💡 Küçük bir araç ama Martini ile çalışacaksanız **her gün** kullanacaksınız.
-> Bir sistemi gözle kontrol edemiyorsanız, hata yaptığınızı da göremezsiniz.
+Görsel denetim yapılamayan bir sistemde kurulum hatalarının fark edilmesi de
+mümkün olmamaktadır.
 
 ---
 
-## 2 · Lipid–protein etkileşim haritaları · ~10 dk
+## 2. Lipit–protein etkileşim analizi (yaklaşık 10 dakika)
 
-Martini'nin gerçekten parladığı yer burası. All-atom'da 100 ns'de birkaç lipid
-değişimi görürsünüz — istatistik yapmak için yeterli değil. Martini'de 10 μs
-koşup, hangi lipidin proteinin hangi bölgesinde ne kadar kaldığını
-**sayısal olarak** söyleyebilirsiniz.
+Kaba-taneli modellerin en belirgin üstünlüğü bu alanda ortaya çıkmaktadır.
+Atomistik simülasyonlarda 100 ns süresince gözlenen lipit değişim sayısı
+istatistiksel değerlendirme için yetersiz kalmaktadır. Martini modelinde
+mikrosaniye mertebesindeki simülasyonlar, belirli bir lipidin protein üzerindeki
+hangi bölgede ne kadar süre kaldığının nicel olarak belirlenmesine olanak
+vermektedir.
 
-**Basit yol — `gmx` ile:**
+Temel yaklaşım:
 
 ```bash
-# Protein çevresindeki lipid baş gruplarının temas sayısı
-gmx select -s md.tpr -f md.xtc -select 'resname POPC and within 0.6 of group "Protein"' -os temas.xvg
+gmx select -s md.tpr -f md.xtc \
+  -select 'resname POPC and within 0.6 of group "Protein"' -os temas.xvg
 ```
 
-**Özel araçlar (kurulum ağır, kursta göstereceğiz sadece):**
+Özelleşmiş araçlar (oturumda yalnızca tanıtılacaktır):
 
-- 🔗 [ProLint2](https://cgmartini.nl/docs/tutorials/Martini3/ProLint/) —
-  interaktif web arayüzü, temas süreleri, bağlanma bölgeleri
-- 🔗 [PyLipID](https://pylipid.readthedocs.io/) — rezidans süresi, bağlanma
-  bölgesi kümeleme
-
----
-
-## 3 · Zaman ölçeği düzeltmesi · ~3 dk
-
-Martini'nin pürüzsüz enerji manzarası dinamiği hızlandırır. Su difüzyonuna
-kalibre edilmiş kabaca **4×** çarpanı yaygın kullanılır.
-
-| | |
-|---|---|
-| Simülasyon zamanı | 10 μs |
-| Efektif zaman | ~40 μs |
-
-> ⚠️ Bu çarpan **evrensel değildir** — sisteme ve incelenen sürece bağlıdır.
-> Yayında hangi zamanı raporladığınızı açıkça yazın.
+- [ProLint2](https://cgmartini.nl/docs/tutorials/Martini3/ProLint/) — temas
+  süreleri ve bağlanma bölgelerinin etkileşimli analizi
+- [PyLipID](https://pylipid.readthedocs.io/) — rezidans süresi hesabı ve
+  bağlanma bölgesi kümelemesi
 
 ---
 
-## Özet: hangi soru için hangi araç?
+## 3. Zaman ölçeği düzeltmesi (yaklaşık 3 dakika)
 
-| Sorunuz | Araç |
+Martini kuvvet alanının yumuşatılmış potansiyel yüzeyi difüzyonu
+hızlandırmaktadır. Su difüzyon katsayısına göre kalibre edilmiş yaklaşık dört
+katlık bir ölçekleme faktörü yaygın olarak kullanılmaktadır.
+
+| Büyüklük | Değer |
 |---|---|
-| Bir yan zincirin tam konformasyonu | **All-atom** |
-| Spesifik hidrojen bağı ağı | **All-atom** |
-| Ligand bağlanma pozunun detayı | **All-atom** |
-| Protein oligomerleşiyor mu? | **Martini** |
-| Hangi lipid proteine yapışıyor? | **Martini** |
-| 40 nm'lik membranda ne oluyor? | **Martini** |
-| Hücresel kalabalıkta difüzyon | **Martini** |
+| Simülasyon süresi | 10 µs |
+| Etkin süre | yaklaşık 40 µs |
 
-**En iyisi:** ikisini birlikte kullanmak. Martini ile geniş tarama yapıp ilginç
-durumu bulun, sonra o durumu all-atom'a geri haritalayıp (backmapping) detaylı
-inceleyin.
+**Dikkat.** Bu faktör evrensel değildir; incelenen sisteme ve sürece bağlı olarak
+değişmektedir. Yayımlanan çalışmalarda hangi zaman ölçeğinin raporlandığı açıkça
+belirtilmelidir.
+
+---
+
+## Yöntem seçimi
+
+| Araştırma sorusu | Uygun yaklaşım |
+|---|---|
+| Yan zincir konformasyonunun ayrıntısı | Atomistik |
+| Belirli bir hidrojen bağı ağı | Atomistik |
+| Ligant bağlanma geometrisinin ayrıntısı | Atomistik |
+| Protein oligomerizasyonu | Kaba-taneli |
+| Lipit–protein tercihli etkileşimleri | Kaba-taneli |
+| Geniş membran yamalarındaki organizasyon | Kaba-taneli |
+| Hücresel kalabalık koşullarında difüzyon | Kaba-taneli |
+
+En verimli yaklaşım iki yöntemin birlikte kullanılmasıdır: kaba-taneli
+simülasyonlarla geniş konformasyon uzayı taranarak ilgi çekici durumlar
+belirlenmekte, bu durumlar atomistik çözünürlüğe geri haritalanarak
+(backmapping) ayrıntılı olarak incelenmektedir.

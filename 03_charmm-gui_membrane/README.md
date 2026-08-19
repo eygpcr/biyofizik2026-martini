@@ -1,187 +1,202 @@
 # Oturum 3 — CHARMM-GUI Membrane Builder
 
-**🕚 11:00–12:15 · 75 dk · Dr. Öğr. Üyesi Ekrem Yaşar**
-**Sistem: PDB [`6JOD`](https://www.rcsb.org/structure/6JOD) — Anjiyotensin II tip-2 reseptörü (AT2R)**
+**11:00–12:15 (75 dakika) · Dr. Öğr. Üyesi Ekrem Yaşar**
+**Model sistem: PDB [6JOD](https://www.rcsb.org/structure/6JOD), anjiyotensin II tip-2 reseptörü (AT2R)**
 
 ---
 
-## Hedef
+## Oturumun amacı
 
-Oturum 2'de her şey kolaydı: tek zincir, kofaktör yok, karar yok.
-Şimdi **gerçek bir yapıyla** çalışıyoruz. Bu oturumda öğreneceğiniz asıl şey
-tıklama sırası değil, **her adımda verilecek kararlar**.
+Oturum 2'de kullanılan sistem, karar gerektirmeyecek biçimde seçilmişti. Bu
+oturumda deneysel olarak elde edilmiş, yardımcı bileşenler içeren ve kısmen
+çözülmemiş bir yapı ile çalışılmaktadır. Oturumun asıl kazanımı işlem sırasının
+ezberlenmesi değil, her adımda verilmesi gereken kararların gerekçelendirilmesidir.
 
 ---
 
-## Önce yapıya bakalım
+## Yapının zincir bileşimi
 
-`6JOD` içinde **5 zincir** var. Ama bunların yalnız ikisi bizim proteinimiz:
+6JOD yapısı beş zincir içermekte olup bunların ikisi incelenen sisteme aittir:
 
-| Zincir | Uzunluk | Ne | Karar |
+| Zincir | Uzunluk | Tanım | İşlem |
 |---|---|---|---|
-| **A** | 312 aa | **Anjiyotensin II tip-2 reseptörü (AT2R)** — asıl GPCR | ✅ **tut** |
-| **B** | 8 aa | **Anjiyotensin II** — agonist peptit (ligand) | ✅ **tut** |
-| **C** | 86 aa | **BRIL** (çözünür sitokrom b562) — kristalizasyon füzyonu | ❌ **sil** |
-| **H** | 220 aa | 4A03 Fab ağır zincir — kristalizasyon yardımcısı | ❌ **sil** |
-| **L** | 212 aa | 4A03 Fab hafif zincir | ❌ **sil** |
+| A | 312 aa | Anjiyotensin II tip-2 reseptörü (AT2R) | Korunur |
+| B | 8 aa | Anjiyotensin II — agonist peptit | Korunur |
+| C | 86 aa | BRIL (çözünür sitokrom b562), kristalizasyon füzyonu | Çıkarılır |
+| H | 220 aa | 4A03 Fab ağır zincir, kristalizasyon yardımcısı | Çıkarılır |
+| L | 212 aa | 4A03 Fab hafif zincir, kristalizasyon yardımcısı | Çıkarılır |
 
-> 🎓 **Günün en önemli dersi olabilir:**
-> **PDB'de gördüğünüz her zincir proteinin parçası değildir.**
->
-> GPCR'ler kristalleşmeye direnir. Araştırmacılar bunu aşmak için ya proteine
-> **BRIL/T4-lizozim gibi bir füzyon** ekler, ya da **Fab fragmanıyla** komplekse
-> sokar. Bunlar deneysel araçlardır — hücrede yoktur. Simülasyona koyarsanız,
-> olmayan bir şeyi simüle etmiş olursunuz.
->
-> Burada işimiz kolay: BRIL ayrı bir zincir (C) olarak deposit edilmiş, silmek
-> yeterli. **Bazı yapılarda BRIL doğrudan ICL3 loop'unun içine yerleştirilmiştir**
-> — o zaman zinciri silemezsiniz, dizinin ortasından kesip çıkarmanız gerekir.
-> Yapının makalesine bakmadan bunu anlayamazsınız.
+**Kavramsal not.** PDB dosyasında yer alan her zincir, incelenen biyolojik
+yapının bileşeni değildir.
 
-📁 Ham yapı: [`girdi/6jod.pdb`](girdi/6jod.pdb)
-📁 Zincirleri ayıklanmış hâli (yedek): [`girdi/6jod_chainAB.pdb`](girdi/6jod_chainAB.pdb)
+GPCR ailesine ait proteinler kristalizasyona dirençlidir. Bu güçlüğün aşılması
+için yaygın olarak iki strateji uygulanmaktadır: proteine BRIL veya T4 lizozim
+gibi bir füzyon bölgesinin eklenmesi ve yapının bir Fab fragmanı ile kompleks
+hâlinde kristalize edilmesi. Her iki bileşen de deneysel araçtır; fizyolojik
+ortamda bulunmamaktadır. Simülasyona dâhil edilmeleri, incelenmesi amaçlanmayan
+bir sistemin modellenmesi anlamına gelmektedir.
+
+Bu yapıda BRIL ayrı bir zincir (C) olarak deposit edilmiş olduğundan çıkarılması
+doğrudan zincir silme işlemiyle gerçekleştirilebilmektedir. Bazı GPCR
+yapılarında BRIL, üçüncü hücre içi ilmiğin (ICL3) içine yerleştirilmiş
+olduğundan zincirin bütünü silinemez; dizi içinden kesilerek çıkarılması
+gerekmektedir. Bu ayrımın yapının kaynak makalesine başvurulmadan tespit
+edilmesi mümkün değildir.
+
+**Dosyalar:**
+- Ham yapı: [`girdi/6jod.pdb`](girdi/6jod.pdb)
+- Zincirleri ayıklanmış yapı: [`girdi/6jod_chainAB.pdb`](girdi/6jod_chainAB.pdb)
 
 ---
 
-## Yapının bize söyledikleri
+## Yapının nitel özellikleri
 
-Kursta bu bilgileri birlikte çıkaracağız — ama önce elimizde ne olduğunu bilelim:
-
-| | |
+| Özellik | Değer |
 |---|---|
-| **Çözünürlük** | 3.2 Å (X-ray) — düşük sayılır, yan zincirlere fazla güvenmeyin |
-| **Chain A'da çözülmüş rezidüler** | **35–340** arası, 306 rezidü |
-| **Eksik rezidüler** | **341–346** (C-terminal kuyruk, 6 rezidü) |
-| **İç loop boşluğu** | **Yok** — şanslıyız |
-| **Chain A disülfitleri** | **Cys35–Cys290** ve **Cys117–Cys195** |
-| **Kofaktör / küçük molekül** | Yok (ligand bir peptit, ayrı zincir) |
+| Yöntem ve çözünürlük | X-ışını kırınımı, 3.2 Å |
+| A zincirinde çözülmüş rezidüler | 35–340 aralığı, toplam 306 rezidü |
+| Çözülmemiş rezidüler | 341–346 (C-terminal uzantı, 6 rezidü) |
+| Zincir içi kopukluk | Bulunmamaktadır |
+| A zinciri disülfit köprüleri | Cys35–Cys290 ve Cys117–Cys195 |
+| Kofaktör veya küçük molekül ligant | Bulunmamaktadır (ligant peptit yapıdadır) |
 
-> 🔍 **Tartışma:** Eksik olan 6 rezidü C-terminal kuyrukta. Bunları modellemek
-> zorunda mıyız? Peki eksik olan bir **iç loop** olsaydı ne yapardık?
-> *(Cevap: iç boşluk topolojiyi kopardığı için mutlaka modellenmeli —
-> MODELLER, AlphaFold veya CHARMM-GUI'nin kendi loop modelleme aracıyla.)*
+**Tartışma sorusu.** Çözülmemiş altı rezidü C-terminal uzantıda yer almaktadır.
+Bu rezidülerin modellenmesi zorunlu mudur? Zincir içinde bir ilmiğin çözülmemiş
+olması hâlinde nasıl bir yol izlenmesi gerekirdi?
+
+*(Zincir içi kopukluk topolojik bütünlüğü bozduğundan modellenmesi zorunludur;
+MODELLER, AlphaFold veya CHARMM-GUI'nin ilmik modelleme modülü kullanılabilir.)*
 
 ---
 
-## Adım adım
+## Uygulama adımları
 
-### 1 · Yapıyı yükle ve zincirleri ayıkla
-1. **Input Generator → Membrane Builder → Bilayer Builder**
-2. **PDB ID:** `6JOD` *(veya `girdi/6jod.pdb`'yi yükleyin)*
-3. Zincir listesinde **A ve B'yi işaretli bırakın; C, H, L'yi kaldırın**
-4. Kristal sularını atın
+### 1. Yapının yüklenmesi ve zincirlerin ayıklanması
 
-> ⚠️ Bu adımı yanlış yaparsanız geri kalan 70 dakika boşa gider. İki kez kontrol edin.
+1. *Input Generator → Membrane Builder → Bilayer Builder* seçilir
+2. *PDB ID* alanına `6JOD` yazılır veya [`girdi/6jod.pdb`](girdi/6jod.pdb)
+   yüklenir
+3. Zincir listesinde A ve B seçili bırakılır; C, H ve L seçimden çıkarılır
+4. Kristalografik su molekülleri çıkarılır
 
-### 2 · Model kararları (Manipulate PDB)
+**Dikkat.** Bu adımdaki bir hata, sonraki tüm işlemleri geçersiz kılmaktadır.
+Zincir seçiminin doğrulanması gerekmektedir.
 
-**a) Terminal grupları.** Chain A 35'ten başlayıp 340'ta bitiyor — yani hem N hem
-C ucu "kesik". Standart NTER/CTER (yüklü uçlar) mı, yoksa nötr uçlar (ACE/CT3) mi?
+### 2. Yapı düzenlemeleri
 
-> 🎓 Kesilmiş bir dizinin ucuna yüklü grup koymak, orada olmayan bir yükü
-> sisteme sokar. Membran içine yakın bir uç için bu ciddi bir yapaylıktır.
+**Terminal gruplar.** A zinciri 35. rezidüden başlayıp 340. rezidüde sona
+ermektedir; her iki uç da dizi bütününden kesilmiş durumdadır. Öntanımlı yüklü
+uçlar (NTER/CTER) ile nötr uç grupları (ACE/CT3) arasında seçim yapılması
+gerekmektedir.
 
-**b) Disülfitler.** Cys35–Cys290 ve Cys117–Cys195 listede görünüyor mu?
-Cys35–Cys290 bağı, GPCR ailesinde N-terminusu ECL3'e bağlayan korunmuş bir bağdır.
+**Kavramsal not.** Kesilmiş bir dizinin ucuna yüklü grup atanması, gerçekte
+bulunmayan bir yükün sisteme eklenmesi anlamına gelmektedir. Membran içine yakın
+konumlanan bir uç için bu durum belirgin bir yapaylık oluşturmaktadır.
 
-**c) Ligand.** Chain B (Anjiyotensin II) 8 rezidülük bir **peptit** — yani
-CHARMM-GUI onu normal bir protein zinciri gibi işleyebiliyor.
+**Disülfit köprüleri.** Cys35–Cys290 ve Cys117–Cys195 bağlarının listede yer
+alması doğrulanmalıdır. Cys35–Cys290 bağı, GPCR ailesinde N-terminal bölgeyi
+üçüncü hücre dışı ilmiğe bağlayan korunmuş bir yapısal öğedir.
 
-> 🎓 Şanslıyız. Ligand küçük bir **organik molekül** olsaydı, kuvvet alanı
-> parametrelerini ayrıca üretmemiz gerekirdi (CGenFF / Ligand Reader & Modeler).
+**Ligant.** B zincirinde yer alan anjiyotensin II sekiz rezidülük bir peptit
+olduğundan CHARMM-GUI tarafından standart bir protein zinciri olarak
+işlenebilmektedir. Ligandın küçük organik molekül olması durumunda kuvvet alanı
+parametrelerinin ayrıca üretilmesi gerekecekti (CGenFF veya Ligand Reader &
+Modeler modülü).
 
-**d) Mutasyon.** CHARMM-GUI arayüzünden nokta mutasyonu nasıl girilir —
-birlikte deneyeceğiz. *(Kendi araştırmanızda bir varyantı çalışacaksanız
-başlangıç noktanız burasıdır.)*
+**Nokta mutasyonu.** Arayüz üzerinden mutasyon tanımlanması uygulamalı olarak
+gösterilecektir. Belirli bir varyant üzerinde çalışacak katılımcılar için
+başlangıç noktası bu adımdır.
 
-### 3 · Protonasyon durumları ve pH
+### 3. Protonasyon durumları
 
-Oturum 2'de hızlıca geçtiğimiz konu burada kritik hale geliyor.
+Oturum 2'de öntanımlı değerlerle geçilen bu adım, membran sistemlerinde
+belirleyici hâle gelmektedir.
 
-- **Histidinler:** HSD (Nδ), HSE (Nε), HSP (çift protonlu, +1 yüklü).
-  Varsayılan genelde HSE'dir — ama doğru mu?
-- **Membrana gömülü Asp/Glu:** Suyun olmadığı hidrofobik ortamda bir karboksil
-  grubun protonlu (nötr) kalması çok olağandır. Varsayılan ise deprotone (yüklü).
+- **Histidin rezidüleri.** HSD (Nδ protonlu), HSE (Nε protonlu) ve HSP (çift
+  protonlu, +1 yüklü) seçenekleri arasında karar verilmesi gerekmektedir.
+  Öntanımlı seçim genellikle HSE'dir.
+- **Membran içinde konumlanan Asp ve Glu rezidüleri.** Düşük dielektrik sabitli
+  hidrofobik ortamda karboksil gruplarının protonlu (nötr) durumda bulunması
+  olağandır; öntanımlı atama ise deprotone (yüklü) durumdur.
 
-> 🎓 **Kuvvet alanı pH bilmez.** pH'ı sisteme, protonasyon durumlarını seçerek
-> siz söylersiniz. Yanlış seçim, simülasyon boyunca *sessizce* yanlış kalır —
-> hata mesajı almazsınız.
->
-> 💡 Ciddi bir çalışmada bu kararı tahminle değil, `PROPKA` / `H++` gibi
-> araçlarla verirsiniz.
+**Kavramsal not.** Kuvvet alanları pH değişkenini içermez. Yanlış protonasyon
+ataması hata mesajı üretmeden simülasyon boyunca geçerli kalmakta ve sonuçları
+sistematik biçimde etkilemektedir. Yayımlanacak çalışmalarda bu kararın PROPKA
+veya H++ gibi araçlarla desteklenmesi önerilmektedir.
 
-### 4 · Membrana yerleştirme (Orientation)
+### 4. Membrana yerleştirme
 
-- **PPM / OPM** ile otomatik yerleştirme: protein membran normaline göre
-  nasıl hizalanır
-- Sonucu **gözle kontrol edin**: TM heliksleri gerçekten membranın içinde mi?
-  Hidrofobik kuşak lipid kuyruklarıyla örtüşüyor mu?
+- PPM veya OPM sunucuları kullanılarak protein membran normaline göre
+  hizalanır.
+- Yerleştirme sonucu görsel olarak denetlenmelidir: transmembran heliksleri
+  çift tabakanın içinde konumlanmış mıdır, hidrofobik kuşak lipit açil
+  zincirleriyle örtüşmekte midir?
 
-> ⚠️ Otomatik yerleştirmeye körü körüne güvenmeyin. Görselleştirmeden
-> bir sonraki adıma geçmeyin.
+**Dikkat.** Otomatik yerleştirme sonucu doğrulanmadan sonraki adıma geçilmemelidir.
 
-### 5 · Lipid kompozisyonu
+### 5. Lipit bileşiminin belirlenmesi
 
-Burada gerçek bir bilimsel karar veriyorsunuz:
-
-| Seçenek | Ne zaman |
+| Seçenek | Uygunluk |
 |---|---|
-| Saf **POPC** | Basit, hızlı, karşılaştırılabilir. "Standart" membran |
-| **POPC/POPE/CHOL** | Plazma membranına daha yakın |
-| Asimetrik çift tabaka | İç ve dış yaprakçık farklı — gerçekçi ama kurulumu zor |
+| Saf POPC | Basit ve karşılaştırılabilir; standart referans membran |
+| POPC/POPE/kolesterol | Plazma membranının bileşimine daha yakın |
+| Asimetrik çift tabaka | Fizyolojik olarak gerçekçi; kurulumu daha karmaşık |
 
-Kursta **POPC** ile devam edip, kolesterol eklemenin sonucu nasıl değiştireceğini
-tartışacağız.
+Oturumda saf POPC ile devam edilecek, kolesterol eklenmesinin sonuçlar üzerindeki
+beklenen etkisi tartışılacaktır.
 
-- **Kutu boyutu:** protein çevresinde en az ~20 Å lipid olsun
-- **Su tabakası:** membranın her iki yanında ≥ 22.5 Å
-- **İyonlar:** 0.15 M KCl
+- Protein çevresinde asgari 20 Å lipit bulunmalıdır
+- Membranın her iki yüzeyinde asgari 22.5 Å su tabakası tanımlanmalıdır
+- İyon derişimi: 0.15 M KCl
 
-### 6 · Kuvvet alanı ve çıktı
+### 6. Kuvvet alanı ve çıktı seçenekleri
 
-- **Force field:** CHARMM36m
-- **Input generation:** **GROMACS**
-- İş bitince `charmm-gui.tgz` indirin
+- **Kuvvet alanı:** CHARMM36m
+- **Çıktı formatı:** GROMACS
+- İşlem tamamlandığında `charmm-gui.tgz` arşivi indirilir
 
 ---
 
-## Ne indirdik?
+## Çıktının incelenmesi
 
-Oturum 2'deki yapının aynısı — ama artık `topol.top` içinde lipidler de var:
+Dosya yapısı Oturum 2 ile aynıdır; `topol.top` dosyasına lipit bileşenleri
+eklenmiştir:
 
 ```
 [ molecules ]
-PROA     1        ← AT2R
-PROB     1        ← Anjiyotensin II
-POPC   256        ← lipidler
-TIP3  12000+      ← su
-POT/CLA  ...      ← iyonlar
+PROA     1        AT2R
+PROB     1        anjiyotensin II
+POPC   256        lipit molekülleri
+TIP3  12000+      su molekülleri
+POT/CLA  ...      iyonlar
 ```
 
-> 🔍 Sistem kaç atom oldu? Oturum 2'deki lizozim sistemiyle karşılaştırın.
-> Bu boyutta bir sistemi 1 μs koşmak ne kadar sürer?
->
-> **İşte tam bu noktada Martini devreye giriyor** — öğleden sonraki oturum.
+**Tartışma sorusu.** Sistemin toplam atom sayısı ne kadardır? Oturum 2'deki
+lizozim sistemiyle karşılaştırıldığında oran nedir? Bu boyuttaki bir sistemin
+1 µs süreyle simüle edilmesi hangi hesaplama kaynağını gerektirmektedir?
 
 ---
 
-## Kapanış: Büyük sistemlerde bu iş nasıl ölçeklenir?
+## Değerlendirme: büyük sistemlere ölçeklenme
 
-Bugün tek bir GPCR ile çalıştık. Ya araştırmanız şunu gerektiriyorsa:
+Bu oturumda tek bir reseptör molekülü ile çalışılmıştır. Araştırma sorusunun
+aşağıdaki koşulları gerektirmesi hâlinde yaklaşımın değiştirilmesi zorunlu hâle
+gelmektedir:
 
-- **10 kopya** GPCR (oligomerizasyon çalışmak için)
-- **40–50 nm** genişlikte bir membran yaması
-- Gerçekçi, çok bileşenli bir lipid karışımı
-- Sitozolik kalabalık (crowding)
+- Oligomerizasyonun incelenmesi için çok sayıda reseptör kopyası
+- 40–50 nm genişliğinde membran yaması
+- Çok bileşenli, fizyolojik lipit bileşimi
+- Sitozolik kalabalık koşullarının temsili
 
-CHARMM-GUI bu ölçekte **pratik değildir**: iş süresi patlar, arayüzde
-yönetilemez hale gelir. Bu yüzden öğleden sonra **komut satırına** geçiyoruz —
-ve çözünürlüğü düşürüyoruz (Martini).
+CHARMM-GUI bu ölçekte pratik değildir; işlem süreleri ve arayüz kısıtları
+belirleyici olmaktadır. Öğleden sonraki oturumda komut satırı araçlarına
+geçilecek ve model çözünürlüğü düşürülecektir.
 
 ---
 
-## 🆘 Takılırsanız
+## Sorun giderme
 
-Hazır CHARMM-GUI çıktısı [`cikti/`](cikti/) klasöründe. Zincir ayıklamada
-takıldıysanız [`girdi/6jod_chainAB.pdb`](girdi/6jod_chainAB.pdb) dosyasını
-doğrudan yükleyebilirsiniz — C, H ve L zincirleri zaten çıkarılmış.
+Önceden üretilmiş CHARMM-GUI çıktıları [`cikti/`](cikti/) klasöründe
+bulunmaktadır. Zincir ayıklama adımında sorun yaşanması hâlinde
+[`girdi/6jod_chainAB.pdb`](girdi/6jod_chainAB.pdb) dosyası doğrudan
+yüklenebilir; bu dosyada C, H ve L zincirleri çıkarılmış durumdadır.

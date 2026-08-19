@@ -1,113 +1,114 @@
-# Oturum 6 — Bentopy: Kalabalık Hücresel Sistemler
+# Oturum 6 — `bentopy` ile Kalabalık Hücresel Sistemler
 
-**🕟 16:35–17:15 · 40 dk · Dr. Öğr. Üyesi Ekrem Yaşar**
+**16:35–17:15 (40 dakika) · Dr. Öğr. Üyesi Ekrem Yaşar**
 
-📓 **Colab notebook:** [`notebooks/06_bentopy.ipynb`](../notebooks/06_bentopy.ipynb)
-🎬 **Uygulama videosu:** [`VIDEO.md`](VIDEO.md)
+Colab not defteri: [`notebooks/06_bentopy.ipynb`](../notebooks/06_bentopy.ipynb)
+Uygulama kaydı: [`VIDEO.md`](VIDEO.md)
 
 ---
 
-## Kursun geldiği yer
+## Kurs boyunca izlenen ölçek gelişimi
 
-Bugün nereden nereye geldiğimize bakalım:
-
-| Oturum | Sistem | Ölçek |
+| Oturum | Sistem | Karakteristik uzunluk |
 |---|---|---|
-| 2 | Suda 1 lizozim | ~5 nm |
-| 3 | Membranda 1 GPCR (all-atom) | ~10 nm |
-| 4 | Membranda 1 GPCR (Martini) | ~12 nm |
-| **6** | **Kalabalık membran + sitozol** | **40–100 nm** |
+| 2 | Çözelti içinde tek lizozim molekülü | yaklaşık 5 nm |
+| 3 | Membranda tek reseptör, atomistik | yaklaşık 10 nm |
+| 4 | Membranda tek reseptör, kaba-taneli | yaklaşık 12 nm |
+| 6 | Kalabalık membran ve sitozol | 40–100 nm |
 
-Kursun adı **"büyük ve kalabalık hücresel sistemler"**. İşte o kısım burası.
-
----
-
-## Neden "kalabalık"?
-
-Simülasyonlarımızın çoğu proteini **seyreltik çözeltide** inceler. Ama hücre
-öyle değil:
-
-- Sitoplazmada protein derişimi **~300 g/L** — hacmin %20–30'u makromolekül
-- Membranda protein/lipid oranı çok yüksek; proteinler birbirine değer
-- Bu kalabalık **difüzyonu yavaşlatır**, **bağlanma dengelerini kaydırır**,
-  katlanmayı ve oligomerleşmeyi etkiler
-
-Yani seyreltik simülasyonlarımız, hücrede olan biteni sistematik olarak
-kaçırıyor olabilir.
-
-**Sorun:** 100 tane proteini bir kutuya elle yerleştirmek imkânsız. Çakışmadan,
-doğru yönelimle, doğru derişimde nasıl yerleştirilir?
-
-**Cevap:** [`bentopy`](https://github.com/marrink-lab/bentopy)
+Kursun başlığında yer alan "büyük ve kalabalık hücresel sistemler" ifadesi bu
+oturumun konusunu oluşturmaktadır.
 
 ---
 
-## bentopy ne yapar?
+## Kalabalık ortam koşullarının önemi
 
-Üç aşamalı bir araç:
+Moleküler simülasyonların büyük bölümü proteinleri seyreltik çözelti koşullarında
+incelemektedir. Hücre içi ortam bu varsayımdan belirgin biçimde ayrılmaktadır:
 
-| Aşama | Komut | Ne yapar |
+- Sitoplazmada toplam makromolekül derişimi yaklaşık 300 g/L düzeyindedir; hacmin
+  %20–30'u makromoleküller tarafından işgal edilmektedir.
+- Biyolojik membranlarda protein/lipit oranı yüksektir; membran proteinleri
+  birbirleriyle doğrudan temas edecek yoğunlukta bulunmaktadır.
+- Kalabalık koşulları difüzyonu yavaşlatmakta, bağlanma dengelerini kaydırmakta,
+  katlanma ve oligomerizasyon süreçlerini etkilemektedir.
+
+Bu nedenle seyreltik koşullarda yürütülen simülasyonlar, hücre içi süreçleri
+sistematik biçimde eksik temsil edebilmektedir.
+
+**Yöntemsel güçlük.** Çok sayıda makromolekülün çakışma oluşturmadan, uygun
+yönelimlerle ve hedeflenen derişimde bir simülasyon kutusuna yerleştirilmesi elle
+yapılabilecek bir işlem değildir.
+
+**Çözüm.** [`bentopy`](https://github.com/marrink-lab/bentopy)
+
+---
+
+## `bentopy` iş akışı
+
+| Aşama | Komut | İşlev |
 |---|---|---|
-| **1. Pack** | `bentopy pack` | Verdiğiniz yapıları, verdiğiniz derişimde, çakışmadan bir kutuya yerleştirir |
-| **2. Render** | `bentopy render` | Yerleşim planından gerçek koordinat dosyasını (`.gro`) üretir |
-| **3. Solvate** | `bentopy solvate` | Kalan boşluğu su ve iyonla doldurur |
+| 1 | `bentopy pack` | Tanımlanan yapıların, belirtilen derişimde ve çakışmasız biçimde kutuya yerleştirilmesi |
+| 2 | `bentopy render` | Yerleşim planından koordinat dosyasının üretilmesi |
+| 3 | `bentopy solvate` | Kalan boşluğun çözücü ve iyonlarla doldurulması |
 
-Çıktı: doğrudan GROMACS'e verilebilecek bir sistem.
+Elde edilen sistem doğrudan GROMACS girdisi olarak kullanılabilmektedir.
 
 ---
 
-## Kursta ne yapacağız?
+## Oturumda yürütülecek uygulama
 
-Oturum 4'te ürettiğimiz **kaba-taneli AT2R**'yi alıp, bir membranda
-**çok kopyalı** bir sistem kuracağız.
+Oturum 4'te üretilen kaba-taneli AT2R modeli kullanılarak, çok sayıda reseptör
+kopyası içeren bir membran sistemi kurulacaktır.
 
-> 🎯 Bu, kongre sitesindeki kurs tanıtımında geçen **"GPCR oligomerizasyonu"**
-> konusunun kapısını açan adımdır: reseptörleri gerçekçi bir yoğunlukta yan yana
-> koyup birbirlerini bulmalarını izleyebilirsiniz.
+Bu uygulama, kongre programında duyurulan GPCR oligomerizasyonu konusunun
+yöntemsel ön koşulunu oluşturmaktadır: reseptörlerin fizyolojik yoğunluğa yakın
+bir dağılımda yerleştirilmesi, oligomerleşme süreçlerinin izlenebilmesini
+sağlamaktadır.
 
-### Kaba akış
+### İşlem sırası
 
 ```bash
-# 1. Yerleşim tanımı (JSON) hazırla: kutu boyutu, hangi yapıdan kaç tane
+# 1. Yerleşim tanımının hazırlanması (kutu boyutu, kopya sayısı)
 bentopy pack yerlesim.json -o plan.json
 
-# 2. Plandan koordinatları üret
+# 2. Plandan koordinatların üretilmesi
 bentopy render plan.json -o kalabalik.gro
 
-# 3. Boşluğu doldur
+# 3. Boşluğun çözücü ile doldurulması
 bentopy solvate -f kalabalik.gro -o sistem.gro
 ```
 
-Ayrıntılar ve tam JSON şablonu notebook'ta.
+Ayrıntılar ve tam yapılandırma şablonu Colab not defterinde yer almaktadır.
 
 ---
 
-## İki senaryo
+## Uygulama planı
 
-Bu oturum için 40 dakikamız var ve `bentopy` kurulumu bazen sürprizli olabiliyor.
+Oturum için ayrılan süre 40 dakika olup, `bentopy` kurulumunda ortam kaynaklı
+sorunlar oluşabilmektedir. Bu nedenle iki senaryo öngörülmüştür:
 
-**Senaryo A — kurulum sorunsuz:** Notebook'u birlikte çalıştırıp kendi
-kalabalık sistemimizi kuruyoruz.
+**Birinci senaryo.** Kurulum sorunsuz tamamlanırsa not defteri birlikte
+çalıştırılarak sistem kurulumu yapılacaktır.
 
-**Senaryo B — takılırsak:** Zaman kaybetmeden geçiyoruz. Elinizde kalanlar:
-- ✅ Tüm komutlar ve JSON şablonu → [`kodlar/`](kodlar/)
-- ✅ Baştan sona uygulama videosu → [`VIDEO.md`](VIDEO.md)
-- ✅ Hazır çıktı dosyaları
+**İkinci senaryo.** Sorun yaşanması hâlinde uygulama sonlandırılarak aşağıdaki
+materyaller katılımcılarla paylaşılacaktır:
 
-Her iki durumda da kurstan **çalışan bir örnekle** ayrılıyorsunuz.
+- Tüm komutlar ve yapılandırma şablonu: [`kodlar/`](kodlar/)
+- Uygulamanın tam kaydı: [`VIDEO.md`](VIDEO.md)
+- Önceden üretilmiş çıktı dosyaları
+
+Her iki durumda da katılımcılar çalışan bir örnek ile kursu tamamlayacaklardır.
 
 ---
 
-## Buradan sonrası
+## İleri çalışma kaynakları
 
-Kalabalık sistem kurmak işin sadece başlangıcı. Devam etmek isterseniz:
+- [bentopy resmî öğretim materyali](https://cgmartini.nl/docs/tutorials/Martini3/Bentopy/)
+- [bentopy deposu ve belgelendirmesi](https://github.com/marrink-lab/bentopy)
+- [Protein kompleksleri — Martini](https://cgmartini.nl/docs/tutorials/Martini3/ProteinsIIb/) —
+  oligomerizasyon analizi
+- [TS2CG v2.0](https://github.com/weria-pezeshkian/TS2CG-v2.0/wiki/Tutorial) —
+  vezikül, tübül ve karmaşık geometrili yapılar
 
-- 🔗 [bentopy resmî tutorial'ı](https://cgmartini.nl/docs/tutorials/Martini3/Bentopy/) —
-  kursta değinemediğimiz tüm ayrıntılar
-- 🔗 [bentopy GitHub](https://github.com/marrink-lab/bentopy) — dokümantasyon, örnekler
-- 🔗 [Protein kompleksleri — Martini](https://cgmartini.nl/docs/tutorials/Martini3/ProteinsIIb/) —
-  oligomerizasyonu analiz etmek için
-- 🔗 [TS2CG v2.0](https://github.com/weria-pezeshkian/TS2CG-v2.0/wiki/Tutorial) —
-  düz yama yerine vezikül, tübül, karmaşık şekiller
-
-Ve tabii: [`../ILERI_OKUMA.md`](../ILERI_OKUMA.md)
+Ayrıca bkz. [`ILERI_OKUMA.md`](../ILERI_OKUMA.md)

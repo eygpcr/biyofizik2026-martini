@@ -1,87 +1,94 @@
-# Oturum 5a — All-Atom Trajektori Analizi
+# Oturum 5a — Atomistik Trajektori Analizi
 
-**🕝 15:20–16:00 · 40 dk · Doç. Dr. Mustafa Tekpınar**
+**15:20–16:00 (40 dakika) · Doç. Dr. Mustafa Tekpınar**
 
-📓 **Colab notebook:** [`notebooks/05a_allatom_analiz.ipynb`](../../notebooks/05a_allatom_analiz.ipynb)
-
----
-
-## Hedef
-
-Bugüne kadar hep **girdi** hazırladık. Şimdi çıktıya bakıyoruz:
-bir trajektori elimize geldiğinde ona hangi soruları sorarız?
-
-> ⚠️ Kursta uzun simülasyon koşmadığımız için **hazır bir trajektori**
-> kullanacağız. Dosyalar: [`../trajektori/`](../trajektori/)
+Colab not defteri: [`notebooks/05a_allatom_analiz.ipynb`](../../notebooks/05a_allatom_analiz.ipynb)
 
 ---
 
-## Analizler
+## Oturumun amacı
 
-### 1 · Önce trajektoriyi düzelt (PBC)
+Önceki oturumlarda simülasyon girdilerinin hazırlanması ele alınmıştır. Bu
+oturumda, elde edilmiş bir trajektorinin hangi ölçütlerle değerlendirileceği
+incelenmektedir.
 
-Analiz yapmadan önce yapılması gereken, sık atlanan adım. Periyodik sınır
-koşulları yüzünden protein kutunun kenarından çıkıp öbür taraftan girer;
-düzeltilmezse RMSD saçmalar.
+Kursta üretim simülasyonu koşulmadığından, önceden hesaplanmış bir trajektori
+kullanılacaktır. Dosyalar: [`../trajektori/`](../trajektori/)
+
+---
+
+## Analiz adımları
+
+### 1. Periyodik sınır koşullarının düzeltilmesi
+
+Analiz öncesinde yapılması gereken ve sıklıkla atlanan adımdır. Periyodik sınır
+koşulları nedeniyle molekül kutunun bir yüzeyinden çıkıp karşı yüzeyden
+girmektedir. Düzeltme yapılmadığında hesaplanan RMSD değerleri yanıltıcı
+olmaktadır.
 
 ```bash
 gmx trjconv -s md.tpr -f md.xtc -o md_nojump.xtc -pbc nojump
 gmx trjconv -s md.tpr -f md_nojump.xtc -o md_fit.xtc -fit rot+trans
 ```
 
-### 2 · RMSD — sistem dengelendi mi?
+### 2. RMSD — sistemin dengelenmesinin değerlendirilmesi
 
 ```bash
 gmx rms -s md.tpr -f md_fit.xtc -o rmsd.xvg
 ```
 
-**Nasıl okunur:** Eğri bir platoya oturmuşsa sistem dengelenmiştir. Sürekli
-tırmanıyorsa ya daha uzun koşmalısınız ya da yapı bozuluyordur.
+**Yorumlama.** Eğrinin bir plato değerine ulaşması sistemin dengelendiğine işaret
+etmektedir. Sürekli artış gösteren bir eğri, simülasyon süresinin yetersiz
+olduğunu veya yapısal bozulma bulunduğunu göstermektedir.
 
-> 🔍 Referans olarak ilk kareyi mi, yoksa kristal yapıyı mı almalıyız? Fark eder mi?
+**Tartışma sorusu.** Referans yapı olarak ilk kare mi yoksa kristal yapı mı
+alınmalıdır? Bu seçim sonucu nasıl etkilemektedir?
 
-### 3 · RMSF — hangi bölgeler esnek?
+### 3. RMSF — rezidü bazında dalgalanma
 
 ```bash
 gmx rmsf -s md.tpr -f md_fit.xtc -o rmsf.xvg -res
 ```
 
-**Nasıl okunur:** Loop'lar ve terminaller yüksek, heliks/yaprak düşük çıkar.
-Beklenmedik bir yerde yüksek RMSF = ilginç bir bulgu ya da bir kurulum hatası.
+**Yorumlama.** İlmikler ve terminal bölgeler yüksek, düzenli ikincil yapı
+öğeleri düşük değerler vermektedir. Beklenmeyen bir bölgede yüksek dalgalanma,
+ya biyolojik açıdan anlamlı bir bulguya ya da kurulum hatasına işaret etmektedir.
 
-> 🔍 RMSF'i kristal yapının **B-faktörleriyle** karşılaştırın. Uyuşuyorlar mı?
+**Tartışma sorusu.** Hesaplanan RMSF profili kristal yapının B-faktörleriyle
+uyum göstermekte midir?
 
-### 4 · Rg — protein kompakt kaldı mı?
+### 4. Jirasyon yarıçapı — yapısal kompaktlığın izlenmesi
 
 ```bash
 gmx gyrate -s md.tpr -f md_fit.xtc -o gyrate.xvg
 ```
 
-Ani artış = açılma (unfolding) veya kurulum sorunu.
+Ani artış, yapının açılmasına veya kurulum hatasına işaret etmektedir.
 
-### 5 · Hidrojen bağları
+### 5. Hidrojen bağı analizi
 
 ```bash
 gmx hbond -s md.tpr -f md_fit.xtc -num hbond.xvg
 ```
 
-> 🎓 **Bunu aklınızda tutun** — 5b'de Martini'ye geçtiğimizde bu analizi
-> *yapamayacağız*. Nedenini orada konuşacağız.
+**Not.** Bu analiz Oturum 5b'de kaba-taneli modeller için karşılaştırma noktası
+oluşturacaktır; Martini modelinde uygulanabilir değildir.
 
-### 6 · Yoğunluk profili (membranlı sistemler)
+### 6. Yoğunluk profili (membran içeren sistemler)
 
 ```bash
 gmx density -s md.tpr -f md_fit.xtc -o density.xvg -d Z -sl 100
 ```
 
-Membran normali boyunca su, lipid başları, kuyruklar ve proteinin nerede
-olduğunu gösterir. Membran kalınlığını buradan okursunuz.
+Membran normali boyunca su, lipit baş grupları, açil zincirler ve proteinin
+dağılımını vermektedir. Membran kalınlığı bu profilden belirlenmektedir.
 
 ---
 
-## Sonuçları görselleştirme
+## Sonuçların görselleştirilmesi
 
-`.xvg` dosyaları düz metin — Python'la çizilir. Notebook'ta hazır:
+GROMACS analiz araçları düz metin biçiminde `.xvg` dosyaları üretmektedir. Not
+defterinde hazır çizim fonksiyonları bulunmaktadır:
 
 ```python
 import numpy as np, matplotlib.pyplot as plt
@@ -92,18 +99,22 @@ plt.xlabel("Zaman (ps)"); plt.ylabel("RMSD (nm)")
 
 ---
 
-## Kontrol listesi — bir trajektoriyi ilk gördüğünüzde
+## Trajektori değerlendirme ölçütleri
 
-- [ ] PBC düzeltildi mi?
-- [ ] Enerji ve sıcaklık kararlı mı?
-- [ ] RMSD platoya oturdu mu? Analizi hangi andan sonra yapmalıyım?
-- [ ] Sistem çökmüş/patlamış mı? (görsel kontrol şart)
-- [ ] Membran varsa: alan/lipid ve kalınlık makul mü?
+Yeni bir trajektori incelenirken denetlenmesi önerilen hususlar:
+
+1. Periyodik sınır koşulları düzeltilmiş midir?
+2. Enerji ve sıcaklık zaman içinde kararlı seyretmekte midir?
+3. RMSD plato değerine ulaşmış mıdır; analiz hangi zaman aralığından itibaren
+   yapılmalıdır?
+4. Sistemde yapısal bozulma bulunmakta mıdır (görsel denetim gereklidir)?
+5. Membran içeren sistemlerde lipit başına alan ve membran kalınlığı deneysel
+   değerlerle uyumlu mudur?
 
 ---
 
-## 📚 Kaynaklar
+## Kaynaklar
 
-- 🔗 [GROMACS analiz araçları](https://manual.gromacs.org/current/user-guide/cmdline.html#commands-by-topic)
-- 🔗 [GROMACS tutorials](https://tutorials.gromacs.org/)
-- 🔗 [MDAnalysis](https://www.mdanalysis.org/) — Python'la özel analiz yazmak için
+- [GROMACS analiz araçları](https://manual.gromacs.org/current/user-guide/cmdline.html#commands-by-topic)
+- [GROMACS öğretim materyalleri](https://tutorials.gromacs.org/)
+- [MDAnalysis](https://www.mdanalysis.org/) — Python tabanlı özelleştirilmiş analiz

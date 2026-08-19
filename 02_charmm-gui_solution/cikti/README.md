@@ -1,7 +1,7 @@
-# Hazır çıktı — Oturum 2
+# Önceden Üretilmiş Çıktılar — Oturum 2
 
-CHARMM-GUI Solution Builder'ın `1AKI` için ürettiği dosyalar buraya konacak
-(`charmm-gui.tgz` içeriği, GROMACS klasörü).
+CHARMM-GUI Solution Builder modülünün `1AKI` yapısı için ürettiği dosyalar
+(`charmm-gui.tgz` arşivi içeriği, GROMACS klasörü) bu dizine yerleştirilecektir.
 
-**Ne zaman kullanılır:** CHARMM-GUI'de bir adımda takılırsanız veya iş
-uzun sürerse, buradan devam edip akışı kaçırmazsınız.
+**Kullanım amacı.** CHARMM-GUI işleminin uzaması veya hata vermesi durumunda
+oturum akışının kesintiye uğramaması için bu dosyalardan devam edilebilir.

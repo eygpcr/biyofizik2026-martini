@@ -1,8 +1,9 @@
-# `martinize2` — komut referansı
+# `martinize2` — Komut Referansı
 
-All-atom protein → Martini 3 kaba-taneli model + topoloji.
+Atomistik protein yapısının Martini 3 kaba-taneli modeline ve topolojisine
+dönüştürülmesi.
 
-## Kurstaki komut
+## Oturumda kullanılan komut
 
 ```bash
 martinize2 \
@@ -15,42 +16,43 @@ martinize2 \
   -maxwarn 10
 ```
 
-## Bayraklar
+## Parametreler
 
-| Bayrak | Ne yapar |
+| Parametre | İşlevi |
 |---|---|
-| `-f` | girdi (all-atom PDB) |
-| `-x` | çıktı (kaba-taneli PDB) |
-| `-o` | çıktı topolojisi (`.top`) |
+| `-f` | Girdi dosyası (atomistik PDB) |
+| `-x` | Çıktı dosyası (kaba-taneli PDB) |
+| `-o` | Çıktı topolojisi (`.top`) |
 | `-ff martini3001` | Martini 3 kuvvet alanı |
-| `-dssp` | ikincil yapıyı DSSP ile belirle |
-| `-ss <dizi>` | ikincil yapıyı elle ver (`-dssp` çalışmazsa) |
-| `-elastic` | elastic network ekle |
-| `-ef` | yay kuvvet sabiti (kJ/mol/nm²) — tipik 500–1000 |
-| `-el` / `-eu` | yay mesafe alt/üst sınırı (nm) |
-| `-ea` / `-ep` | açı/dihedral cezaları |
-| `-p backbone` | omurga pozisyon kısıtı ekle |
-| `-cys auto` | disülfitleri otomatik bul |
+| `-dssp` | İkincil yapının DSSP ile belirlenmesi |
+| `-ss <dizi>` | İkincil yapının doğrudan tanımlanması (`-dssp` kullanılamadığında) |
+| `-elastic` | Elastik ağ tanımlanması |
+| `-ef` | Yay kuvvet sabiti (kJ mol⁻¹ nm⁻²) |
+| `-el` / `-eu` | Yay tanımlanacak mesafe aralığının alt ve üst sınırı (nm) |
+| `-ea` / `-ep` | Açı ve dihedral ceza terimleri |
+| `-p backbone` | Omurga üzerinde konum kısıtı tanımlanması |
+| `-cys auto` | Disülfit köprülerinin otomatik belirlenmesi |
 
-## Çıktılar
+## Çıktı dosyaları
 
-| Dosya | İçerik |
+| Dosya | İçeriği |
 |---|---|
-| `at2r_cg.pdb` | kaba-taneli koordinatlar |
-| `topol.top` | ana topoloji (`#include` satırları) |
-| `molecule_0.itp` | proteinin topolojisi — elastic network burada |
+| `at2r_cg.pdb` | Kaba-taneli koordinatlar |
+| `topol.top` | Ana topoloji dosyası (`#include` yönergeleri) |
+| `molecule_0.itp` | Protein topolojisi; elastik ağ tanımı bu dosyada yer almaktadır |
 
-## Elastic network ayarı
+## Elastik ağ kuvvet sabitinin seçimi
 
-`-ef` değerini seçerken:
-
-| Değer | Sonuç |
+| `-ef` değeri | Beklenen davranış |
 |---|---|
-| < 300 | yapı açılabilir |
-| **500–1000** | tipik aralık — kursta 700 kullandık |
-| > 1500 | protein neredeyse rijit; esneklik bilgisi kaybolur |
+| < 300 | Yapısal bütünlük korunamayabilir |
+| 500–1000 | Yaygın kullanılan aralık; oturumda 700 değeri kullanılmıştır |
+| > 1500 | Model neredeyse rijit hâle gelmekte, esneklik bilgisi kaybolmaktadır |
 
-> ⚠️ Elastic network protein yapısını **dondurur**. Katlanma, açılma ve büyük
-> konformasyonel değişim çalışamazsınız. Bu, Martini'nin bilinçli bir ödünüdür.
+**Dikkat.** Elastik ağ protein yapısını kısıtlamaktadır. Katlanma, açılma ve
+büyük ölçekli konformasyonel değişim süreçleri bu yaklaşımla incelenememektedir.
+Bu, Martini modelinin bilinçli bir yöntemsel ödünüdür.
 
-📖 [Resmî tutorial](https://cgmartini.nl/docs/tutorials/Martini3/ProteinsI/Tut1.html)
+## Kaynak
+
+[Martini Protein Model — Using Martinize2](https://cgmartini.nl/docs/tutorials/Martini3/ProteinsI/Tut1.html)

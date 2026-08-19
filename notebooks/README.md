@@ -1,25 +1,31 @@
-# Colab Notebook'ları
+# Google Colab Not Defterleri
 
-Aşağıdaki rozetlere tıklayarak notebook'ları doğrudan Google Colab'da açabilirsiniz.
-Bilgisayarınıza hiçbir şey kurmanıza gerek yok.
+Aşağıdaki bağlantılar not defterlerini doğrudan Google Colab ortamında
+açmaktadır. Katılımcıların kendi bilgisayarlarına yazılım kurmaları
+gerekmemektedir.
 
-| Oturum | Notebook | Aç |
+| Oturum | Dosya | Bağlantı |
 |---|---|---|
-| **4** — Martini 3 input hazırlama | `04_martini_input.ipynb` | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eygpcr/biyofizik2026-martini/blob/main/notebooks/04_martini_input.ipynb) |
-| **5a** — All-atom trajektori analizi | `05a_allatom_analiz.ipynb` | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eygpcr/biyofizik2026-martini/blob/main/notebooks/05a_allatom_analiz.ipynb) |
-| **6** — Bentopy: kalabalık sistemler | `06_bentopy.ipynb` | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eygpcr/biyofizik2026-martini/blob/main/notebooks/06_bentopy.ipynb) |
+| 4 — Martini 3 girdi hazırlama | `04_martini_input.ipynb` | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eygpcr/biyofizik2026-martini/blob/main/notebooks/04_martini_input.ipynb) |
+| 5a — Atomistik trajektori analizi | `05a_allatom_analiz.ipynb` | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eygpcr/biyofizik2026-martini/blob/main/notebooks/05a_allatom_analiz.ipynb) |
+| 6 — Kalabalık hücresel sistemler | `06_bentopy.ipynb` | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eygpcr/biyofizik2026-martini/blob/main/notebooks/06_bentopy.ipynb) |
 
 ---
 
 ## Kullanım notları
 
-- ⚠️ **Colab oturumu kapanınca üretilen dosyalar silinir.** Notebook'ların sonundaki
-  indirme hücresini çalıştırmayı unutmayın.
-- 🔋 **GPU gerekmiyor.** Simülasyon koşmuyoruz; ücretsiz CPU runtime yeterli.
-- ⏱️ İlk kurulum hücresi **3–5 dakika** sürer. Bir kez çalıştırmanız yeterli.
-- 💾 Kendi kopyanızda çalışmak isterseniz: **Dosya → Drive'a kopya kaydet**
+- Colab çalışma zamanı sonlandığında oturum sırasında üretilen dosyalar
+  silinmektedir. Not defterlerinin sonunda yer alan indirme hücresinin
+  çalıştırılması gerekmektedir.
+- GPU gereksinimi bulunmamaktadır; üretim simülasyonu koşulmadığından ücretsiz
+  CPU çalışma zamanı yeterlidir.
+- İlk kurulum hücresinin çalışma süresi yaklaşık 3–5 dakikadır ve oturum başına
+  bir kez çalıştırılması yeterlidir.
+- Not defterinin kişisel bir kopyası üzerinde çalışmak için
+  *Dosya → Drive'a kopya kaydet* seçeneği kullanılabilir.
 
-## Takılırsanız
+## Sorun giderme
 
-Her oturumun kendi klasöründe **hazır çıktı dosyaları** (`cikti/`) var.
-Bir adımda takılırsanız oradan devam edin — akışı kaçırmayın.
+Her oturumun klasöründe önceden üretilmiş çıktı dosyaları (`cikti/`)
+bulunmaktadır. Bir adımda sorun yaşanması hâlinde oturum akışının kesintiye
+uğramaması için bu dosyalardan devam edilmesi önerilmektedir.

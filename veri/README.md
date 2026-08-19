@@ -1,6 +1,7 @@
-# Veri
+# Veri Dosyaları
 
-Kursta kullanılan küçük girdi dosyaları.
+Kursta kullanılan girdi dosyaları bu dizinde yer almaktadır.
 
-Büyük dosyalar (>50 MB) GitHub'a konmaz; bunun yerine Zenodo veya Google Drive
-bağlantısı verilir ve notebook'lar oradan indirir.
+50 MB üzerindeki dosyalar depoya eklenmemekte, bunun yerine Zenodo veya Google
+Drive bağlantısı verilmekte ve not defterleri dosyayı ilgili adresten
+indirmektedir.

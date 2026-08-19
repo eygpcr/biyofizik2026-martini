@@ -1,132 +1,158 @@
-# Moleküler Simülasyona Giriş — Biyofizik 2026 Kursu
+# Moleküler Simülasyona Giriş: Sistem Kurulumu ve Analizi
 
-> **BÜYÜK ve KALABALIK HÜCRESEL SİSTEMLERİN MOLEKÜLER SİMÜLASYONU**
-> 8. Uluslararası Katılımlı ve 37. Ulusal Biyofizik Kongresi öncesi kurs
-> 📅 **25 Ağustos 2026, Salı · 09:00–17:30**
-> 📍 Ankara Üniversitesi Tıp Fakültesi, Morfoloji Binası — Yeşil Salon
+**BÜYÜK VE KALABALIK HÜCRESEL SİSTEMLERİN MOLEKÜLER SİMÜLASYONU**
 
-Bu depo kursun tüm materyalini içerir: adım adım Türkçe anlatımlar, Google Colab
-notebook'ları, girdi/çıktı dosyaları ve kurs sonrası devam edebileceğiniz kaynaklar.
+8. Uluslararası Katılımlı ve 37. Ulusal Biyofizik Kongresi öncesi düzenlenen kurs
+
+- **Tarih:** 25 Ağustos 2026, Salı — 09:00–17:30
+- **Yer:** Ankara Üniversitesi Tıp Fakültesi, Morfoloji Binası, Yeşil Salon
+
+Bu depo kursun tüm eğitim materyalini içermektedir: oturum bazında uygulama
+yönergeleri, Google Colab not defterleri, girdi ve çıktı dosyaları ile kurs
+sonrası çalışma kaynakları.
 
 ---
 
-## 👩‍🏫 Eğitmenler
+## Eğitmenler
 
-| | |
+| Eğitmen | Kurum |
 |---|---|
-| **Prof. Dr. Nazmi Yaraş** | Akdeniz Üniversitesi, Biyofizik AD |
-| **Doç. Dr. Mustafa Tekpınar** | |
-| **Dr. Öğr. Üyesi Ekrem Yaşar** | Erzincan Binali Yıldırım Üniversitesi, Biyofizik AD |
+| Prof. Dr. Nazmi Yaraş | Akdeniz Üniversitesi, Biyofizik Anabilim Dalı |
+| Doç. Dr. Mustafa Tekpınar | — |
+| Dr. Öğr. Üyesi Ekrem Yaşar | Erzincan Binali Yıldırım Üniversitesi, Biyofizik Anabilim Dalı |
 
 ---
 
-## 🎯 Bu kurs ne öğretiyor?
+## Kursun amacı ve kapsamı
 
-Kurs boyunca **tek bir protein** üzerinden ilerliyoruz: **Anjiyotensin II tip-2
-reseptörü (AT2R)** — bir GPCR. Sabah onu all-atom (atomistik) olarak hazırlıyoruz,
-öğleden sonra aynı proteini Martini 3 ile kaba-taneli (coarse-grained) hale getirip
-bir membrana gömüyoruz, günün sonunda ise kalabalık bir hücresel sisteme taşıyoruz.
+Kurs boyunca tek bir model sistem üzerinde ilerlenmektedir: **anjiyotensin II
+tip-2 reseptörü (AT2R)**, bir G proteinine kenetli reseptör (GPCR). Sabah
+oturumlarında bu protein atomistik (all-atom) çözünürlükte hazırlanmakta,
+öğleden sonra aynı protein Martini 3 kuvvet alanı ile kaba-taneli
+(coarse-grained) modele dönüştürülerek lipit çift tabakasına yerleştirilmekte,
+günün sonunda ise kalabalık bir hücresel sisteme aktarılmaktadır.
 
-**Kursun kapsamı: input hazırlama.** Uzun simülasyonlar koşmuyoruz — çünkü asıl zor
-ve asıl öğretici kısım, simülasyona *girecek* sistemi doğru kurmaktır. Analiz
-oturumunda hazır trajektoriler kullanılacak.
+**Kapsam sınırı.** Kursta üretim simülasyonu koşulmamaktadır. Odak, simülasyona
+girecek sistemin doğru biçimde kurulması (input hazırlama) ve elde edilmiş
+trajektorilerin analizidir. Bu tercih, bir günlük süre kısıtı ve katılımcıların
+önceden simülasyon deneyimi bulunmaması nedeniyle yapılmıştır.
 
-Kurs sonunda şunları yapabiliyor olacaksınız:
+### Öğrenim kazanımları
 
-- Bir PDB yapısına bakıp **hangi zincirlerin gerçekten proteine ait olduğunu** ayırt etmek
-- CHARMM-GUI ile **suda çözünmüş** ve **membrana gömülü** sistemler kurmak
-- Protonasyon durumları, disülfitler, eksik loop'lar ve mutasyonlar hakkında bilinçli karar vermek
-- Terminalden `martinize2` ve `insane` ile **Martini 3 girdileri** üretmek
-- All-atom ve Martini analizlerinin nerede ayrıştığını görmek
-- `bentopy` ile kalabalık/hücresel ölçekte sistem kurmanın mantığını kavramak
+Kursun tamamlanmasının ardından katılımcıların aşağıdaki yetkinlikleri
+kazanmaları hedeflenmektedir:
 
-**Ön koşul yok.** Daha önce hiç simülasyon yapmamış olmanız beklenir.
+1. Bir Protein Veri Bankası (PDB) yapısını inceleyerek hangi zincirlerin
+   incelenen proteine ait olduğunu, hangilerinin deneysel yardımcı bileşen
+   olduğunu ayırt etmek
+2. CHARMM-GUI kullanarak çözelti içi ve membrana gömülü sistemler kurmak
+3. Protonasyon durumu, disülfit köprüsü, çözülmemiş rezidü ve nokta mutasyonu
+   konularında gerekçelendirilmiş kararlar vermek
+4. Komut satırı üzerinden `martinize2` ve `insane` araçlarıyla Martini 3
+   girdileri üretmek
+5. Atomistik ve kaba-taneli modellerde analiz yaklaşımlarının nerede ayrıştığını
+   değerlendirmek
+6. `bentopy` ile kalabalık hücresel sistem kurulumunun ilkelerini açıklamak
+
+**Ön koşul.** Bulunmamaktadır. Katılımcıların daha önce moleküler dinamik
+simülasyonu deneyimi olmadığı varsayılmaktadır.
 
 ---
 
-## 🚀 Hızlı başlangıç
+## Başlangıç
 
-1. **[KURULUM.md](KURULUM.md)** dosyasındaki kontrol listesini kursten önce tamamlayın.
-   *(Özellikle CHARMM-GUI hesabı — onayı bir iş günü sürebiliyor.)*
-2. **[ON_TOPLANTI.md](ON_TOPLANTI.md)** — 21 Ağustos Cuma öğleden sonraki hazırlık
-   toplantısının gündemi.
-3. Kurs günü her oturumun kendi klasöründeki `README.md` dosyasını takip edin.
+1. [KURULUM.md](KURULUM.md) dosyasındaki hesap ve yazılım kontrol listesi kurs
+   gününden önce tamamlanmalıdır. CHARMM-GUI hesap onayı bir iş günü
+   sürebildiğinden bu adım geciktirilmemelidir.
+2. [ON_TOPLANTI.md](ON_TOPLANTI.md) dosyası, 21 Ağustos Cuma günü yapılacak
+   hazırlık toplantısının gündemini içermektedir.
+3. Kurs günü her oturum, ilgili klasördeki yönerge dosyası takip edilerek
+   yürütülecektir.
 
 ---
 
-## 📅 Program — 25 Ağustos 2026, Salı
+## Program — 25 Ağustos 2026
 
 | Saat | Oturum | Eğitmen |
 |---|---|---|
-| 09:00–09:45 | **[1 · Teori: MD'nin temelleri ve ölçek problemi](01_teori/)** | NY + MT |
-| 09:45–10:00 | ☕ ara | |
-| 10:00–10:45 | **[2 · CHARMM-GUI Solution Builder](02_charmm-gui_solution/)** — PDB `1AKI` | EY |
-| 10:45–11:00 | ☕ ara | |
-| 11:00–12:15 | **[3 · CHARMM-GUI Membrane Builder](03_charmm-gui_membrane/)** — PDB `6JOD` | EY |
-| 12:15–13:30 | 🍽️ öğle arası | |
-| 13:30–15:00 | **[4 · Martini 3 input hazırlama](04_martini_input/)** — `martinize2` + `insane` | EY |
-| 15:00–15:20 | ☕ ara | |
-| 15:20–16:00 | **[5a · All-atom trajektori analizi](05_analiz/allatom/)** | MT |
-| 16:00–16:20 | **[5b · Martini'de analiz nasıl değişir?](05_analiz/martini/)** | EY |
-| 16:20–16:35 | ☕ ara | |
-| 16:35–17:15 | **[6 · Bentopy: kalabalık hücresel sistemler](06_bentopy/)** | EY |
-| 17:15–17:30 | Kapanış, soru-cevap, **[ileri okuma](ILERI_OKUMA.md)** | Hepsi |
+| 09:00–09:45 | [1. Moleküler dinamiğin temelleri ve ölçek problemi](01_teori/) | N. Yaraş, M. Tekpınar |
+| 09:45–10:00 | Ara | |
+| 10:00–10:45 | [2. CHARMM-GUI Solution Builder — PDB `1AKI`](02_charmm-gui_solution/) | E. Yaşar |
+| 10:45–11:00 | Ara | |
+| 11:00–12:15 | [3. CHARMM-GUI Membrane Builder — PDB `6JOD`](03_charmm-gui_membrane/) | E. Yaşar |
+| 12:15–13:30 | Öğle arası | |
+| 13:30–15:00 | [4. Martini 3 girdi hazırlama: `martinize2` ve `insane`](04_martini_input/) | E. Yaşar |
+| 15:00–15:20 | Ara | |
+| 15:20–16:00 | [5a. Atomistik trajektori analizi](05_analiz/allatom/) | M. Tekpınar |
+| 16:00–16:20 | [5b. Kaba-taneli modellerde analiz farklılıkları](05_analiz/martini/) | E. Yaşar |
+| 16:20–16:35 | Ara | |
+| 16:35–17:15 | [6. `bentopy` ile kalabalık hücresel sistemler](06_bentopy/) | E. Yaşar |
+| 17:15–17:30 | Değerlendirme ve [ileri okuma](ILERI_OKUMA.md) | Tüm eğitmenler |
 
 ---
 
-## 🧬 Kullanılan yapılar
+## Kullanılan yapılar
 
-| PDB | Ne | Nerede |
+| PDB | Tanım | Kullanıldığı oturum |
 |---|---|---|
-| [**1AKI**](https://www.rcsb.org/structure/1AKI) | Tavuk yumurta akı lizozimi · X-ray 1.5 Å · tek zincir, kofaktörsüz | Oturum 2 |
-| [**6JOD**](https://www.rcsb.org/structure/6JOD) | Anjiyotensin II tip-2 reseptörü (AT2R) + ligand · X-ray 3.2 Å | Oturum 3 ve 4 |
+| [1AKI](https://www.rcsb.org/structure/1AKI) | Tavuk yumurta akı lizozimi; X-ışını kırınımı, 1.5 Å; tek zincir, kofaktörsüz | Oturum 2 |
+| [6JOD](https://www.rcsb.org/structure/6JOD) | Anjiyotensin II tip-2 reseptörü (AT2R), ligantlı; X-ışını kırınımı, 3.2 Å | Oturum 3 ve 4 |
 
-**6JOD neden seçildi?** İçinde 5 zincir var ama bunların yalnız ikisi bizi ilgilendiriyor:
+### 6JOD yapısının zincir bileşimi
 
-| Zincir | Ne | Karar |
-|---|---|---|
-| **A** (312 aa) | Anjiyotensin II tip-2 reseptörü — asıl GPCR | ✅ tutulacak |
-| **B** (8 aa) | Anjiyotensin II — agonist peptit | ✅ tutulacak |
-| **C** (86 aa) | BRIL (çözünür sitokrom b562) — kristalizasyon füzyonu | ❌ silinecek |
-| **H** (220 aa) | 4A03 Fab ağır zincir | ❌ silinecek |
-| **L** (212 aa) | 4A03 Fab hafif zincir | ❌ silinecek |
+Yapı beş zincir içermekte olup bunların yalnızca ikisi incelenen sisteme aittir:
 
-Yani daha ilk adımda şunu öğreniyoruz: **PDB'de gördüğünüz her zincir proteinin
-parçası değildir.**
+| Zincir | Uzunluk | Tanım | İşlem |
+|---|---|---|---|
+| A | 312 aa | Anjiyotensin II tip-2 reseptörü (AT2R) | Korunur |
+| B | 8 aa | Anjiyotensin II — agonist peptit | Korunur |
+| C | 86 aa | BRIL (çözünür sitokrom b562) — kristalizasyon füzyonu | Çıkarılır |
+| H | 220 aa | 4A03 Fab ağır zincir — kristalizasyon yardımcısı | Çıkarılır |
+| L | 212 aa | 4A03 Fab hafif zincir — kristalizasyon yardımcısı | Çıkarılır |
 
----
-
-## 💻 Hesaplama ortamı
-
-Uygulamalar **Google Colab** üzerinde yapılacak — bilgisayarınıza hiçbir şey
-kurmanıza gerek yok, modern bir tarayıcı yeterli.
-
-- Simülasyon koşmadığımız için **GPU gerekmiyor**; ücretsiz CPU runtime yeterli.
-- Her uygulamanın **hazır çıktısı** ilgili klasörün `cikti/` dizininde duruyor —
-  Colab'da bir yere takılırsanız oradan devam edebilirsiniz.
-- Kendi makinenize kurmak isterseniz talimatlar [KURULUM.md](KURULUM.md) sonunda.
+Bu ayrım, kursun ilk uygulamalı kazanımını oluşturmaktadır: PDB dosyasında yer
+alan her zincir, incelenen biyolojik yapının bileşeni değildir.
 
 ---
 
-## 📚 Kaynaklar ve atıf
+## Hesaplama ortamı
 
-Bu kursun Martini bölümleri, aşağıdaki açık kaynaklı materyallerden yararlanılarak
-hazırlanmıştır. Depomuzda tutorial içerikleri **kopyalanmamış**, doğrudan
-kaynağına link verilmiştir:
+Uygulamalar Google Colab üzerinde yürütülecektir. Katılımcıların kendi
+bilgisayarlarına yazılım kurmaları gerekmemekte, güncel bir internet tarayıcısı
+yeterli olmaktadır.
 
-- **[cgmartini.nl](https://cgmartini.nl/docs/tutorials/)** — Martini 3 resmî tutorial'ları
-  (Groningen Üniversitesi, Marrink grubu)
-- **[MARTINI Odyssey — Athens 2026](https://github.com/paulocts/martini-odyssey-2026)** —
-  Paulo C. T. Souza, Robin Corey, Antonios Kolocouris ve ekibinin düzenlediği okulun
-  hands-on materyali. Bu deponun yapısı ondan esinlenmiştir.
-- **[CHARMM-GUI](https://charmm-gui.org)** — Jo, Kim, Iyer & Im (2008), *J. Comput. Chem.*
-- **[GROMACS](https://www.gromacs.org)** · **[bentopy](https://github.com/marrink-lab/bentopy)**
-
-Kurs materyalinin kendisi **CC BY 4.0** ile lisanslıdır — bkz. [LICENSE](LICENSE).
+- Üretim simülasyonu koşulmadığından GPU gereksinimi bulunmamaktadır; ücretsiz
+  CPU çalışma zamanı yeterlidir.
+- Her uygulamanın önceden üretilmiş çıktıları ilgili klasörün `cikti/` dizininde
+  bulunmaktadır. Bir adımda sorun yaşanması hâlinde bu dosyalardan devam
+  edilebilir.
+- Yerel kurulum yönergeleri [KURULUM.md](KURULUM.md) dosyasının sonunda yer
+  almaktadır.
 
 ---
 
-## ❓ Sorularınız için
+## Kaynaklar ve atıf
+
+Kursun Martini bölümleri aşağıdaki açık erişimli materyallerden yararlanılarak
+hazırlanmıştır. Bu depoda ilgili öğretim içerikleri çoğaltılmamış, doğrudan
+kaynağına atıf yapılmıştır.
+
+- [cgmartini.nl](https://cgmartini.nl/docs/tutorials/) — Martini 3 resmî öğretim
+  materyalleri (Groningen Üniversitesi, Marrink grubu)
+- [MARTINI Odyssey — Athens 2026](https://github.com/paulocts/martini-odyssey-2026) —
+  P. C. T. Souza, R. Corey ve A. Kolocouris tarafından düzenlenen okulun
+  uygulama materyali. Bu deponun yapısı anılan çalışmadan esinlenmiştir.
+- [CHARMM-GUI](https://charmm-gui.org) — Jo, S., Kim, T., Iyer, V. G., Im, W.
+  (2008). *Journal of Computational Chemistry*, 29(11), 1859–1865.
+- [GROMACS](https://www.gromacs.org) · [bentopy](https://github.com/marrink-lab/bentopy)
+
+Kurs materyali CC BY 4.0 lisansı ile sunulmaktadır; bkz. [LICENSE](LICENSE).
+
+---
+
+## İletişim
 
 Kurs sekreteryası: Doç. Dr. Ayşegül Durak — `atoy@ankara.edu.tr`
-Depo ile ilgili teknik sorunlar için bu deponun **Issues** sekmesini kullanabilirsiniz.
+
+Depo içeriğine ilişkin teknik bildirimler için deponun *Issues* bölümü
+kullanılabilir.

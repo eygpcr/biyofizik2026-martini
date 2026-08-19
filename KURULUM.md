@@ -1,79 +1,88 @@
-# Kurulum ve Hesap Kontrol Listesi
+# Hesap ve Yazılım Kurulum Yönergesi
 
-> ⚠️ **Bu listeyi kurs gününden ÖNCE tamamlayın.** Özellikle CHARMM-GUI hesabı
-> onayı bir iş günü sürebiliyor. **21 Ağustos Cuma ön toplantısında** hep birlikte
-> canlı olarak kontrol edeceğiz — o güne kadar hazır olmanız yeterli.
+Bu belgede yer alan hazırlıkların **kurs gününden önce** tamamlanması
+gerekmektedir. Hazırlıklar 21 Ağustos Cuma günü yapılacak ön toplantıda birlikte
+denetlenecektir.
 
-Kurs boyunca bilgisayarınıza **hiçbir yazılım kurmanıza gerek yok**. Tüm uygulamalar
-tarayıcı üzerinden (CHARMM-GUI ve Google Colab) yapılacak.
+Kurs boyunca katılımcıların kendi bilgisayarlarına yazılım kurmaları
+gerekmemektedir. Tüm uygulamalar tarayıcı üzerinden yürütülecektir (CHARMM-GUI
+ve Google Colab).
 
 ---
 
-## ✅ Zorunlu
+## 1. Zorunlu hazırlıklar
 
-### 1. CHARMM-GUI hesabı
+### 1.1. CHARMM-GUI hesabı
 
-Oturum 2 ve 3'ün tamamı bu sitede geçiyor.
+Oturum 2 ve Oturum 3'ün tamamı bu platform üzerinde yürütülecektir.
 
-- 🔗 https://charmm-gui.org
-- Sağ üstten **Register** → akademik e-posta adresinizle kaydolun (**ücretsiz**)
-- ⏳ **Hesap onayı bir iş günü sürebilir.** Bu yüzden en geç **18 Ağustos**'a kadar
-  kaydolun ki 21 Ağustos toplantısında giriş yapabildiğinizi doğrulayabilelim.
-- ✔️ **Kontrol:** siteye giriş yapabiliyor musunuz? *Input Generator → Solution Builder*
-  sayfası açılıyor mu?
+- Adres: https://charmm-gui.org
+- Sayfanın sağ üst köşesindeki *Register* bağlantısı kullanılarak akademik
+  e-posta adresi ile ücretsiz kayıt oluşturulmalıdır.
+- **Hesap onayı bir iş günü sürebilmektedir.** Bu nedenle kaydın en geç
+  **18 Ağustos** tarihine kadar tamamlanması önerilmektedir.
+- **Doğrulama:** Platforma giriş yapılabildiği ve *Input Generator → Solution
+  Builder* sayfasının açıldığı kontrol edilmelidir.
 
-### 2. Google hesabı (Colab için)
+### 1.2. Google hesabı (Colab erişimi)
 
-Oturum 4, 5 ve 6'nın uygulamaları Google Colab'da.
+Oturum 4, 5 ve 6'nın uygulamaları Google Colab üzerinde yürütülecektir.
 
-- 🔗 https://colab.research.google.com
-- ⚠️ **Kurumsal/üniversite Google hesaplarında Colab kapalı olabiliyor.**
-  Bu yüzden **kişisel bir Gmail hesabı** kullanmanızı öneriyoruz.
-- ✔️ **Kontrol:** Colab'ı açıp yeni bir notebook oluşturun, tek bir hücreye
-  `print("merhaba")` yazıp çalıştırın. Çıktı geliyorsa hazırsınız.
+- Adres: https://colab.research.google.com
+- Kurumsal Google hesaplarında Colab erişimi kurum politikası gereği kapalı
+  olabilmektedir. Bu nedenle kişisel bir Google hesabı kullanılması
+  önerilmektedir.
+- **Doğrulama:** Colab üzerinde yeni bir not defteri oluşturularak tek satırlık
+  bir hücrenin (`print("test")`) çalıştırılması yeterlidir.
 
-### 3. Donanım
+### 1.3. Donanım
 
-- Modern bir tarayıcı (Chrome, Firefox, Edge, Safari) çalıştıran **herhangi bir laptop**
+- Güncel bir tarayıcı (Chrome, Firefox, Edge veya Safari) çalıştırabilen
+  herhangi bir dizüstü bilgisayar
 - Kararlı internet bağlantısı
-- **GPU gerekmiyor** — kursta uzun simülasyon koşmuyoruz
+- GPU gereksinimi bulunmamaktadır; kursta üretim simülasyonu koşulmamaktadır.
 
 ---
 
-## 🔶 Önerilen (zorunlu değil)
+## 2. Önerilen hazırlıklar
 
-### 4. VMD — moleküler görselleştirme
+### 2.1. Moleküler görselleştirme yazılımı
 
-Oturum 5b'de kaba-taneli yapıları nasıl doğru göstereceğimizi anlatacağız.
-Kendi ekranınızda denemek isterseniz:
+Oturum 5b'de kaba-taneli yapıların görselleştirilmesi ele alınacaktır.
+Uygulamayı kendi bilgisayarında tekrar etmek isteyen katılımcılar için:
 
-- 🔗 https://www.ks.uiuc.edu/Research/vmd/
-- İndirmek için siteye **ücretsiz kayıt** olmanız gerekiyor
-- Alternatif: [PyMOL](https://pymol.org/) veya [ChimeraX](https://www.cgl.ucsf.edu/chimerax/)
+- [VMD](https://www.ks.uiuc.edu/Research/vmd/) — indirme için ücretsiz kayıt
+  gerekmektedir
+- Alternatifler: [PyMOL](https://pymol.org/),
+  [ChimeraX](https://www.cgl.ucsf.edu/chimerax/)
 
 ---
 
-## ❌ Gerekmeyenler
+## 3. Gerekmeyen hazırlıklar
 
-| | |
+| Bileşen | Açıklama |
 |---|---|
-| **GitHub hesabı** | Bu depo herkese açık; hesapsız da indirebilir/okuyabilirsiniz |
-| **Yerel GROMACS kurulumu** | Colab'da hazır gelecek |
-| **Linux / terminal deneyimi** | Komutları birlikte, adım adım yazacağız |
+| GitHub hesabı | Depo herkese açıktır; hesap gerekmeksizin erişilebilir |
+| Yerel GROMACS kurulumu | Colab ortamında hazır olarak sunulacaktır |
+| Linux veya komut satırı deneyimi | Komutlar oturum sırasında adım adım açıklanacaktır |
 
 ---
 
-## 📝 Kurs öncesi ödev (~20 dakika)
+## 4. Kurs öncesi okuma
 
-[`01_teori/README.md`](01_teori/) içindeki okuma listesinden **1–2 kısa kaynağa**
-göz atın. Hepsini okumanız beklenmiyor; amaç kurs sabahı terimlerin tanıdık gelmesi.
+[01_teori](01_teori/) klasöründeki okuma listesinden bir veya iki kısa kaynağın
+incelenmesi önerilmektedir (yaklaşık 20 dakika). Listenin tamamının okunması
+beklenmemektedir; amaç, kullanılacak terminolojinin kurs sabahı tanıdık
+gelmesidir.
 
 ---
 
-## 🖥️ Ek: kurstan sonra kendi makinenize kurmak isterseniz
+## 5. Ek: Yerel kurulum
 
-Kurs sırasında buna **ihtiyacınız yok**. Kendi araştırmanızda devam etmek isterseniz
-en kolay yol `conda`/`mamba`:
+Bu bölüm kurs için gerekli değildir. Katılımcıların kurs sonrasında kendi
+araştırmalarında çalışmaya devam edebilmeleri amacıyla verilmiştir.
+
+Önerilen yol `conda`/`mamba` paket yöneticisidir:
 
 ```bash
 # Miniforge kurulu değilse: https://github.com/conda-forge/miniforge
@@ -83,7 +92,7 @@ mamba install -c conda-forge gromacs
 pip install vermouth insane
 ```
 
-Kurulumu doğrulayın:
+Kurulum doğrulaması:
 
 ```bash
 gmx --version
@@ -91,13 +100,14 @@ martinize2 -h
 insane -h
 ```
 
-**Windows kullanıcıları:** GROMACS'i doğrudan Windows'a kurmak yerine
-[WSL2](https://learn.microsoft.com/tr-tr/windows/wsl/install) (Ubuntu) üzerine
-kurmanız çok daha sorunsuz olur.
+**Windows kullanıcıları için not.** GROMACS'in doğrudan Windows üzerine
+kurulması yerine [WSL2](https://learn.microsoft.com/tr-tr/windows/wsl/install)
+(Ubuntu) ortamı üzerine kurulması önerilmektedir.
 
 ---
 
-## 🆘 Takıldığınız yer olursa
+## 6. Destek
 
-21 Ağustos ön toplantısına takıldığınız noktayla gelin — birlikte çözelim.
-Acil durumlar için bu deponun **Issues** sekmesini de kullanabilirsiniz.
+Kurulum aşamasında karşılaşılan sorunlar 21 Ağustos tarihli ön toplantıda ele
+alınacaktır. Toplantı öncesinde bildirim yapmak isteyen katılımcılar deponun
+*Issues* bölümünü kullanabilirler.

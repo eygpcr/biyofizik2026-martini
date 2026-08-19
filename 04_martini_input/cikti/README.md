@@ -1,16 +1,16 @@
-# Hazır çıktı — Oturum 4
+# Önceden Üretilmiş Çıktılar — Oturum 4
 
-Notebook'un her adımının çıktısı buraya konacak:
+Not defterindeki her adımın çıktısı bu dizine yerleştirilecektir.
 
-| Dosya | Ne |
+| Dosya | İçeriği |
 |---|---|
-| `at2r.pdb` | `6JOD`'dan ayıklanmış chain A |
-| `at2r_cg.pdb` | `martinize2` çıktısı — kaba-taneli protein |
-| `molecule_0.itp` | protein topolojisi (elastic network dâhil) |
-| `sistem.gro` | `insane` çıktısı — protein + membran + su + iyon |
-| `sistem.top` | düzeltilmiş topoloji |
-| `minimization.mdp` | EM ayarları |
-| `em.tpr` | doğrulanmış GROMACS girdisi |
+| `at2r.pdb` | `6JOD` yapısından ayıklanmış A zinciri |
+| `at2r_cg.pdb` | `martinize2` çıktısı: kaba-taneli protein koordinatları |
+| `molecule_0.itp` | Protein topolojisi (elastik ağ tanımı dâhil) |
+| `sistem.gro` | `insane` çıktısı: protein, membran, çözücü ve iyonlar |
+| `sistem.top` | Düzeltilmiş topoloji dosyası |
+| `minimization.mdp` | Enerji minimizasyonu parametreleri |
+| `em.tpr` | Doğrulanmış GROMACS çalıştırma girdisi |
 
-**Ne zaman kullanılır:** Bir adımda takılırsanız o adımın çıktısını buradan
-alıp sonraki adıma geçin.
+**Kullanım amacı.** Bir adımda sorun yaşanması hâlinde ilgili çıktı dosyası
+buradan alınarak sonraki adıma geçilebilir.
