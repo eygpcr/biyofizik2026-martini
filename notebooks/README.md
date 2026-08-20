@@ -14,9 +14,11 @@ gerekmemektedir.
 
 ## Kullanım notları
 
-- Colab çalışma zamanı sonlandığında oturum sırasında üretilen dosyalar
-  silinmektedir. Not defterlerinin sonunda yer alan indirme hücresinin
-  çalıştırılması gerekmektedir.
+- **Çıktılar Google Drive'a kaydedilmektedir.** Not defterlerinin ilk hücresi
+  Drive'ı bağlamakta ve `Biyofizik2026_Martini/` altında oturuma özgü bir klasör
+  oluşturmaktadır (Oturum 4 için `martini_input/`, Oturum 6 için `bentopy/`).
+  Üretilen dosyalar ve çizimler adım adım buraya kopyalanmaktadır; Colab çalışma
+  zamanı sonlansa dahi kaybolmazlar.
 - GPU gereksinimi bulunmamaktadır; üretim simülasyonu koşulmadığından ücretsiz
   CPU çalışma zamanı yeterlidir.
 - İlk kurulum hücresinin çalışma süresi yaklaşık 3–5 dakikadır ve oturum başına

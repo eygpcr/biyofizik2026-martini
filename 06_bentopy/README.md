@@ -2,8 +2,17 @@
 
 **Dr. Öğr. Üyesi Ekrem Yaşar**
 
+[![Colab'da Aç](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eygpcr/biyofizik2026-martini/blob/main/notebooks/06_bentopy.ipynb)
+
 Colab not defteri: [`notebooks/06_bentopy.ipynb`](../notebooks/06_bentopy.ipynb)
 Uygulama kaydı: [`VIDEO.md`](VIDEO.md)
+
+> Yukarıdaki düğme not defterini doğrudan Google Colab'da açmaktadır; dosya
+> indirmeye gerek yoktur. Not defteri çalıştırıldığında Google Drive'ınızda
+> `Biyofizik2026_Martini/bentopy/` klasörü oluşturulmaktadır. Üç uygulama aynı
+> dosya adlarını kullandığından her biri kendi alt klasörüne
+> (`uygulama1_kutu/`, `uygulama2_membran/`, `uygulama3_bolmeler/`)
+> kaydedilmekte, çizimler ise `gorseller/` klasörüne konmaktadır.
 
 Bu oturumda Martini resmî öğretim materyali doğrudan uygulanmaktadır:
 **[Bentopy Tutorial — cgmartini.nl](https://cgmartini.nl/docs/tutorials/Martini3/Bentopy/)**

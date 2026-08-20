@@ -2,7 +2,13 @@
 
 **Doç. Dr. Mustafa Tekpınar**
 
+[![Colab'da Aç](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eygpcr/biyofizik2026-martini/blob/main/notebooks/05a_allatom_analiz.ipynb)
+
 Colab not defteri: [`notebooks/05a_allatom_analiz.ipynb`](../../notebooks/05a_allatom_analiz.ipynb)
+
+> **Geçici sürüm.** Bu oturum Doç. Dr. Mustafa Tekpınar tarafından yürütülecek
+> olup, kendi hazırladığı not defteri ile değiştirilecektir. Mevcut içerik yer
+> tutucu niteliğindedir.
 
 ---
 

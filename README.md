@@ -71,21 +71,21 @@ simülasyonu deneyimi olmadığı varsayılmaktadır.
 
 ## Program — 25 Ağustos 2026
 
-| Saat | Oturum | Eğitmen |
-|---|---|---|
-| 09:00–09:45 | [1. Moleküler dinamiğin temelleri ve ölçek problemi](01_teori/) | N. Yaraş, M. Tekpınar |
-| 09:45–10:00 | Ara | |
-| 10:00–10:45 | [2. CHARMM-GUI Solution Builder — PDB `1AKI`](02_charmm-gui_solution/) | E. Yaşar |
-| 10:45–11:00 | Ara | |
-| 11:00–12:15 | [3. CHARMM-GUI Membrane Builder — PDB `6JOD`](03_charmm-gui_membrane/) | E. Yaşar |
-| 12:15–13:30 | Öğle arası | |
-| 13:30–15:00 | [4. Martini 3 girdi hazırlama: `martinize2` ve `insane`](04_martini_input/) | E. Yaşar |
-| 15:00–15:20 | Ara | |
-| 15:20–16:00 | [5a. Atomistik trajektori analizi](05_analiz/allatom/) | M. Tekpınar |
-| 16:00–16:20 | [5b. Kaba-taneli modellerde analiz farklılıkları](05_analiz/martini/) | E. Yaşar |
-| 16:20–16:35 | Ara | |
-| 16:35–17:15 | [6. `bentopy` ile kalabalık hücresel sistemler](06_bentopy/) | E. Yaşar |
-| 17:15–17:30 | Değerlendirme ve [ileri okuma](ILERI_OKUMA.md) | Tüm eğitmenler |
+| Saat | Oturum | Eğitmen | Not defteri |
+|---|---|---|---|
+| 09:00–09:45 | [1. Moleküler dinamiğin temelleri ve ölçek problemi](01_teori/) | N. Yaraş, M. Tekpınar | |
+| 09:45–10:00 | Ara | | |
+| 10:00–10:45 | [2. CHARMM-GUI Solution Builder — PDB `1AKI`](02_charmm-gui_solution/) | E. Yaşar | tarayıcı |
+| 10:45–11:00 | Ara | | |
+| 11:00–12:15 | [3. CHARMM-GUI Membrane Builder — PDB `6JOD`](03_charmm-gui_membrane/) | E. Yaşar | tarayıcı |
+| 12:15–13:30 | Öğle arası | | |
+| 13:30–15:00 | [4. Martini 3 girdi hazırlama: `martinize2` ve `insane`](04_martini_input/) | E. Yaşar | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eygpcr/biyofizik2026-martini/blob/main/notebooks/04_martini_input.ipynb) |
+| 15:00–15:20 | Ara | | |
+| 15:20–16:00 | [5a. Atomistik trajektori analizi](05_analiz/allatom/) | M. Tekpınar | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eygpcr/biyofizik2026-martini/blob/main/notebooks/05a_allatom_analiz.ipynb) |
+| 16:00–16:20 | [5b. Kaba-taneli modellerde analiz farklılıkları](05_analiz/martini/) | E. Yaşar | |
+| 16:20–16:35 | Ara | | |
+| 16:35–17:15 | [6. `bentopy` ile kalabalık hücresel sistemler](06_bentopy/) | E. Yaşar | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eygpcr/biyofizik2026-martini/blob/main/notebooks/06_bentopy.ipynb) |
+| 17:15–17:30 | Değerlendirme ve [ileri okuma](ILERI_OKUMA.md) | Tüm eğitmenler | |
 
 ---
 
@@ -124,6 +124,31 @@ yeterli olmaktadır.
 - Her uygulamanın önceden üretilmiş çıktıları ilgili klasörün `cikti/` dizininde
   bulunmaktadır. Bir adımda sorun yaşanması hâlinde bu dosyalardan devam
   edilebilir.
+
+### Çıktıların saklanması
+
+Colab çalışma zamanı sonlandığında üretilen dosyalar silinmektedir. Bu nedenle
+not defterleri, çıktıları katılımcının kendi Google Drive hesabına
+kaydetmektedir:
+
+```
+Drive'ım/
+└── Biyofizik2026_Martini/
+    ├── martini_input/              Oturum 4
+    │   ├── girdi/
+    │   ├── cikti/
+    │   └── gorseller/
+    └── bentopy/                    Oturum 6
+        ├── uygulama1_kutu/
+        ├── uygulama2_membran/
+        ├── uygulama3_bolmeler/
+        └── gorseller/
+```
+
+Klasörler not defterinin ilk hücresi çalıştırıldığında otomatik olarak
+oluşturulmaktadır. Oturum 6'daki üç uygulama aynı dosya adlarını kullandığından
+her biri ayrı alt klasöre kaydedilmekte, böylece çıktıların üst üste yazılması
+önlenmektedir.
 - Yerel kurulum yönergeleri [KURULUM.md](KURULUM.md) dosyasının sonunda yer
   almaktadır.
 

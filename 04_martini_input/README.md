@@ -3,7 +3,14 @@
 **Dr. Öğr. Üyesi Ekrem Yaşar**
 **Model sistem: 6JOD A zinciri (AT2R) — sabah oturumunda kullanılan protein**
 
+[![Colab'da Aç](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eygpcr/biyofizik2026-martini/blob/main/notebooks/04_martini_input.ipynb)
+
 Colab not defteri: [`notebooks/04_martini_input.ipynb`](../notebooks/04_martini_input.ipynb)
+
+> Yukarıdaki düğme not defterini doğrudan Google Colab'da açmaktadır; dosya
+> indirmeye gerek yoktur. Not defteri çalıştırıldığında Google Drive'ınızda
+> `Biyofizik2026_Martini/martini_input/` klasörü oluşturulmakta ve tüm çıktılar
+> (`girdi/`, `cikti/`, `gorseller/`) buraya kaydedilmektedir.
 
 ---
 
