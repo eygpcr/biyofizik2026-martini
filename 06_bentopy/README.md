@@ -218,9 +218,23 @@ sunmaktadır:
 | Etkileşimli seyreltilmiş görünüm | Proteinlerden omurga, lipitlerden fosfat merkezleri örneklenerek küçültülmüş sistem; döndürülebilir |
 | Üç boyutlu perspektif | Molekül ağırlık merkezleri; kalabalık kutunun bütünü tek bakışta |
 | İki boyutlu kesit ve z profili | Tam sistem üzerinde niceliksel denetim |
+| **Referans karşılaştırma** | Kurulan sistem, cgmartini.nl sayfasındaki VMD render'ının **yanına** konarak gösterilir |
 
 Girdi yapıları (lizozim, ubikitin, membran) küçük olduğundan doğrudan
 etkileşimli olarak incelenmektedir.
+
+### Referans karşılaştırma
+
+Öğretim materyalindeki görüntüler VMD ile üretilmiş yüksek kaliteli
+render'lardır. Colab ortamında VMD bulunmadığından ve sistemler milyonlarca
+parçacık içerdiğinden aynı kalitede render üretilememektedir. Bunun yerine her
+uygulamanın sonunda kurulan sistemin iki boyutlu kesiti, öğretim materyalindeki
+referans görüntünün yanına konmaktadır; böylece **neyin görülmesi gerektiği**
+açıkça anlaşılmaktadır.
+
+Karşılaştırmanın anlamlı olması için kesit çizimi öğretim materyalindeki renk
+düzenine göre yapılmaktadır: yeşil lizozim, mavi ubikitin, gri membran, açık
+mavi su.
 
 ---
 
