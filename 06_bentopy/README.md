@@ -12,9 +12,10 @@ Uygulama kaydı: [`VIDEO.md`](VIDEO.md)
 > `Biyofizik2026_Martini/bentopy/` klasörü oluşturulmaktadır. Üç uygulama aynı
 > dosya adlarını kullandığından her biri kendi alt klasörüne
 > (`uygulama1_kutu/`, `uygulama2_membran/`, `uygulama3_bolmeler/`)
-> kaydedilmekte, çizimler ise `gorseller/` klasörüne konmaktadır.
+> kaydedilmekte; çizimler `gorseller/`, GROMACS ile çalıştırılabilir eksiksiz
+> paket ise `simulasyon/` klasörüne konmaktadır.
 
-Bu oturumda Martini resmî öğretim materyali doğrudan uygulanmaktadır:
+Bu oturumda Martini resmî öğretim materyali uygulanmaktadır:
 **[Bentopy Tutorial — cgmartini.nl](https://cgmartini.nl/docs/tutorials/Martini3/Bentopy/)**
 
 ---
@@ -26,14 +27,12 @@ Bu oturumda Martini resmî öğretim materyali doğrudan uygulanmaktadır:
 | 2 | Çözelti içinde tek lizozim molekülü | yaklaşık 5 nm |
 | 3 | Membranda tek reseptör, atomistik | yaklaşık 10 nm |
 | 4 | Membranda tek reseptör, kaba-taneli | yaklaşık 12 nm |
-| 6 | Kalabalık, çok bölmeli hücresel sistem | 40 nm |
+| **6** | **Kalabalık, çok bölmeli sistem** | **40 nm** |
 
 Kursun başlığında yer alan "büyük ve kalabalık hücresel sistemler" ifadesi bu
-oturumun konusunu oluşturmaktadır.
-
-Oturumda kullanılan model proteinlerden biri lizozimdir; Oturum 2'de atomistik
-olarak hazırlanan sistemin kaba-taneli karşılığı burada yüzlerce kopya hâlinde
-kullanılmaktadır.
+oturumun konusunu oluşturmaktadır. Kullanılan model proteinlerden biri
+lizozimdir; Oturum 2'de atomistik olarak hazırlanan proteinin kaba-taneli
+karşılığı burada yüzlerce kopya hâlinde kullanılmaktadır.
 
 ---
 
@@ -66,36 +65,65 @@ elle yapılabilecek bir işlem değildir.
 | `bentopy-mask` | Var olan bir yapıdan (örneğin membran) bölme maskeleri üretilmesi |
 | `bentopy-pack` | Yapıların tanımlanan bölmelere çakışmasız olarak yerleştirilmesi |
 | `bentopy-render` | Yerleşim planından koordinat ve topoloji dosyalarının üretilmesi |
-| `bentopy-merge` | Paketlenen yapıların var olan bir sistemle (membran) birleştirilmesi |
+| `bentopy-merge` | Paketlenen yapıların var olan bir sistemle birleştirilmesi |
 | `bentopy-solvate` | Kalan boşluğun çözücü ve iyonlarla doldurulması |
 
-Yerleşim, `.bent` uzantılı bir yapılandırma dosyasıyla tanımlanmaktadır. Bu dosya
-`[ general ]`, `[ space ]`, `[ includes ]`, `[ compartments ]` ve `[ segments ]`
-bölümlerinden oluşmaktadır.
+### İş akışı
+
+```
+  .bent  ──bentopy-pack──▶  placements.json  ──bentopy-render──▶  .gro + .top
+                                                                      │
+                              (membran varsa) bentopy-merge ◀─────────┘
+                                                                      │
+                                          bentopy-solvate ◀───────────┘
+```
+
+`bentopy-pack` yalnızca **nereye ne konacağını** hesaplar; koordinat üretmez.
+
+### `.bent` yapılandırma biçimi
+
+| Bölüm | İçeriği |
+|---|---|
+| `[ general ]` | Sistem başlığı ve rastgelelik tohumu |
+| `[ space ]` | Kutu boyutları ve paketleme ızgara çözünürlüğü |
+| `[ includes ]` | Topolojiye eklenecek kuvvet alanı dosyaları |
+| `[ compartments ]` | Yerleştirmenin yapılacağı hacimlerin tanımı |
+| `[ segments ]` | Hangi yapıdan kaç kopyanın hangi bölmeye konacağı |
+
+**Bölme tanımlama dili** bu aracın en ayırt edici özelliğidir:
+
+| İfade | Anlamı |
+|---|---|
+| `system is all` | Kutunun tamamı |
+| `membrane from "maske.npz"` | Maske dosyasından tanımlanan hacim |
+| `solvent combines not membrane` | Membran dışında kalan hacim |
+| `yakin around 5 of membrane` | Membran yüzeyinden 5 nm mesafedeki kabuk |
+| `X combines A and B` | İki hacmin kesişimi |
 
 Söz dizimi başvurusu:
 [Reference for `.bent` files](https://github.com/marrink-lab/bentopy/wiki/Reference-for-bent)
 
 ---
 
-## Kurulum ve tutorial dosyaları
+## Kurulum ve öğretim dosyaları
 
 ```bash
 pip install bentopy
 ```
 
-Önceden derlenmiş paketin kurulamaması hâlinde Rust derleyicisi
-([rustup](https://rustup.rs/)) gerekmektedir.
+`bentopy` Rust ile yazılmış olup PyPI'da yalnızca Linux x86_64 için önceden
+derlenmiş paket sunmaktadır. Colab bu platformda çalıştığından kurulum hızlı
+tamamlanır. Kendi bilgisayarınızda (özellikle macOS'ta) kaynaktan derleme
+gerekebilir; bu durumda [rustup](https://rustup.rs/) ile Rust derleyicisi
+kurulmalıdır.
 
-Tutorial dosyaları (yapılar, topolojiler, `.mdp` dosyaları):
+Öğretim dosyaları:
 
 ```bash
 wget https://cgmartini-library.s3.ca-central-1.amazonaws.com/0_Tutorials/m3_tutorials/Bentopy/tutorial_files.tar.gz
 tar -xzf tutorial_files.tar.gz
 cd tutorial_files
 ```
-
-Arşiv içeriği:
 
 ```
 tutorial_files/
@@ -106,104 +134,34 @@ tutorial_files/
 
 ---
 
-## Uygulama 1 — Kutu içinde protein paketleme
+## Uygulama 1 — Kutu içinde homojen paketleme
 
-Sitoplazmik yoğunlukta, homojen dağılımlı bir protein sistemi kurulmaktadır.
-
-**Yapılandırma dosyası** (`simple_packing.bent`):
-
-```
-[ general ]
-title "Proteins in a box"
-seed 0
-
-[ space ]
-dimensions 40, 40, 40
-resolution 0.5
-
-[ includes ]
-"topology/martini_v3.0.0.itp"
-"topology/martini_v3.0.0_ions_v1.itp"
-"topology/martini_v3.0.0_solvents_v1.itp"
-"topology/lysozyme.itp"
-
-[ compartments ]
-system is all
-
-[ segments ]
-LYZ 650 from "structures/lysozyme.pdb" in system
-```
-
-**Komutlar:**
+40 × 40 × 40 nm boyutlarında bir kutuya **650 lizozim** molekülü, sitoplazmik
+derişime karşılık gelen yoğunlukta yerleştirilmektedir.
 
 ```bash
 bentopy-pack simple_packing.bent placements.json
 bentopy-render placements.json system.gro -t topol.top
 bentopy-solvate -i system.gro -o solvated_system.gro \
-    -s NA:0.15M -s CL:0.15M \
-    --charge neutral \
-    -t topol.top
+    -s NA:0.15M -s CL:0.15M --charge neutral -t topol.top
 ```
 
-**Sonuç.** 40 × 40 × 40 nm boyutlarında bir kutu içinde 650 lizozim molekülü,
-sitoplazmik derişime karşılık gelen yoğunlukta dağıtılmış olarak elde
-edilmektedir.
-
-**Tartışma sorusu.** Oturum 2'de tek bir lizozim molekülü için kurulan sistemin
-atom sayısı ile bu sistemin parçacık sayısı karşılaştırıldığında hangi ölçek
-farkı ortaya çıkmaktadır?
+**Beklenen sonuç.** Protein z ekseni boyunca düzgün dağılmış olmalıdır; herhangi
+bir bölgede zenginleşme görülmemelidir. Not defteri bunu dağılımın bağıl
+değişimini hesaplayarak niceliksel olarak sınamaktadır.
 
 ---
 
 ## Uygulama 2 — Membran çevresinde konuma bağlı paketleme
 
-Bu uygulamada proteinler yalnızca sayıca değil, konumsal kurala göre de
-yerleştirilmektedir: bir protein türü çözücü hacmine dağıtılırken, diğeri yalnızca
+Proteinler yalnızca sayıca değil, **konumsal kurala göre** de
+yerleştirilmektedir: lizozim çözücü hacmine dağıtılırken, ubikitin yalnızca
 membran yüzeyine yakın bölgede konumlandırılmaktadır.
-
-**Maskenin üretilmesi.** Var olan bir membran yapısından bölme maskesi
-çıkarılmaktadır:
 
 ```bash
 bentopy-mask structures/membrane.gro --visualize-labels labels.gro
 bentopy-mask structures/membrane.gro -l 1:membrane_mask.npz
-```
 
-İlk komut etiketlemenin görsel olarak denetlenmesini sağlamakta, ikinci komut
-kullanılacak maske dosyasını üretmektedir.
-
-**Yapılandırma dosyası** (`membrane_packing.bent`):
-
-```
-[ general ]
-title "Proteins around a membrane"
-seed 0
-
-[ space ]
-dimensions 40, 40, 40
-resolution 0.5
-
-[ includes ]
-"topology/martini_v3.0.0.itp"
-"topology/martini_v3.0.0_ions_v1.itp"
-"topology/martini_v3.0.0_solvents_v1.itp"
-"topology/martini_v3.0.0_phospholipids_v1.itp"
-"topology/lysozyme.itp"
-"topology/ubiquitin.itp"
-
-[ compartments ]
-membrane from "membrane_mask.npz"
-solvent combines not membrane
-close-to-membrane around 5 of membrane
-
-[ segments ]
-LYZ:lyz 300 from "structures/lysozyme.pdb" in solvent
-UBQ:ubq 100 from "structures/ubiquitin.pdb" in close-to-membrane
-```
-
-**Komutlar:**
-
-```bash
 bentopy-pack membrane_packing.bent placements.json
 bentopy-render placements.json packed_proteins.gro -t topol.top
 bentopy-merge packed_proteins.gro structures/membrane.gro -o system.gro
@@ -212,14 +170,16 @@ bentopy-solvate -i system.gro -o solvated_system.gro -t topol.top \
     -s NA:0.15M -s CL:0.15M --charge neutral
 ```
 
-**Dikkat.** `bentopy-merge` işleminden sonra lipit sayısının topoloji dosyasına
-elle eklenmesi gerekmektedir; birleştirilen membran yapısı `bentopy` tarafından
-üretilmediğinden topolojide otomatik olarak yer almamaktadır.
+**Dikkat.** `bentopy-merge` işleminden sonra lipit sayısının topolojiye elle
+eklenmesi gerekmektedir; birleştirilen membran `bentopy` tarafından
+üretilmediğinden topolojide otomatik olarak yer almamaktadır. Bu adım
+atlanırsa `gmx grompp`, koordinat ile topoloji sayılarının uyuşmadığı hatasını
+verir.
 
-**Kavramsal not.** `[ compartments ]` bölümündeki `around 5 of membrane` tanımı,
-membran yüzeyinden 5 nm mesafedeki hacmi ayrı bir bölme olarak tanımlamaktadır.
-Bu yaklaşım, periferik membran proteinlerinin fizyolojik dağılımının
-modellenmesine olanak vermektedir.
+**Beklenen sonuç.** Protein dağılımı membran çevresinde belirgin biçimde
+zenginleşmelidir. Not defteri, membrana yakın ve uzak hacimlerdeki protein
+yoğunluklarını karşılaştırarak `close-to-membrane` bölme tanımının işlediğini
+sayısal olarak doğrulamaktadır.
 
 ---
 
@@ -228,66 +188,67 @@ modellenmesine olanak vermektedir.
 Çift membranla ayrılmış iki bölme tanımlanmakta ve her bölmeye farklı protein
 yerleştirilmektedir. Süre elverdiği takdirde yürütülecektir.
 
-**Maskelerin üretilmesi:**
-
 ```bash
 bentopy-mask structures/double_membrane.gro -b compartment_labels.gro
 bentopy-mask structures/double_membrane.gro \
-    -l  -1:A_mask.npz \
-    -l  -2:B_mask.npz \
-    -l 1,2:membrane_mask.npz
+    -l  -1:A_mask.npz -l  -2:B_mask.npz -l 1,2:membrane_mask.npz
 ```
 
-**Yapılandırma dosyası** (`compartment_packing.bent`):
+Bölme tanımlarında bir **kesişim** kullanılmaktadır:
 
 ```
-[ general ]
-title "Proteins in different compartments"
-seed 0
-
-[ space ]
-dimensions 40, 40, 40
-resolution 0.5
-
-[ includes ]
-"topology/martini_v3.0.0.itp"
-"topology/martini_v3.0.0_ions_v1.itp"
-"topology/martini_v3.0.0_solvents_v1.itp"
-"topology/martini_v3.0.0_phospholipids_v1.itp"
-"topology/lysozyme.itp"
-"topology/ubiquitin.itp"
-
-[ compartments ]
-membrane from "membrane_mask.npz"
-A from "A_mask.npz"
-B from "B_mask.npz"
 membrane-neighborhood around 4 of membrane
 B-close-to-membrane combines membrane-neighborhood and B
-
-[ segments ]
-LYZ:lyz 200 from "structures/lysozyme.pdb" in A
-UBQ:ubq 100 from "structures/ubiquitin.pdb" in B-close-to-membrane
 ```
 
-**Komutlar:**
-
-```bash
-bentopy-pack compartment_packing.bent placements.json
-bentopy-render placements.json packed_proteins.gro -t topol.top
-bentopy-merge packed_proteins.gro structures/double_membrane.gro -o system.gro
-echo "POPC    10816" >> topol.top
-bentopy-solvate -i system.gro -o solvated_system.gro -t topol.top \
-    -s NA:0.15M -s CL:0.15M --charge neutral
-```
+Böylece ubikitin yalnızca B tarafındaki membran yüzeyine yerleşmekte, A tarafına
+geçmemektedir.
 
 ---
 
-## Kurulan sistemin simülasyona hazırlanması
+## Yapıların görselleştirilmesi
 
-Kursta üretim simülasyonu koşulmamaktadır. Tutorial'da yer alan simülasyon
-adımları, kurulan sistemin doğrudan kullanılabilir olduğunu göstermek amacıyla
-[`kodlar/simulasyon.sh`](kodlar/simulasyon.sh) dosyasında verilmiştir:
-enerji minimizasyonu, indeks grubu tanımlanması, dengeleme ve üretim aşamaları.
+Oturum 4'teki sistem 17 bin parçacıktı ve doğrudan etkileşimli
+gösterilebiliyordu. Bu oturumdaki sistemler milyonlarca parçacık içerdiğinden
+aynı yöntem tarayıcıyı kilitler. Not defteri bu nedenle her yapıyı üç şekilde
+sunmaktadır:
+
+| Yöntem | Ne gösterir |
+|---|---|
+| Etkileşimli seyreltilmiş görünüm | Proteinlerden omurga, lipitlerden fosfat merkezleri örneklenerek küçültülmüş sistem; döndürülebilir |
+| Üç boyutlu perspektif | Molekül ağırlık merkezleri; kalabalık kutunun bütünü tek bakışta |
+| İki boyutlu kesit ve z profili | Tam sistem üzerinde niceliksel denetim |
+
+Girdi yapıları (lizozim, ubikitin, membran) küçük olduğundan doğrudan
+etkileşimli olarak incelenmektedir.
+
+---
+
+## Çıktılar
+
+Not defteri, GROMACS ile doğrudan çalıştırılabilecek eksiksiz bir paketi Google
+Drive'a kaydetmektedir. Paket **Uygulama 2** sistemi üzerine kurulmaktadır; üç
+uygulama arasında hem membran hem çözünür protein içeren en temsili sistem
+budur.
+
+```
+Biyofizik2026_Martini/bentopy/
+├── uygulama1_kutu/
+├── uygulama2_membran/
+├── uygulama3_bolmeler/
+├── gorseller/
+└── simulasyon/        solvated_system.gro, topol.top, topology/*.itp,
+                       mdp_files/*.mdp, index.ndx, calistir.sh, OKUBENI.md
+```
+
+Not defteri bu paketin gerçekten çalıştığını `gmx grompp` ile ayrıca
+sınamaktadır.
+
+> **Dosya boyutu.** Solvatlanmış 40 nm'lik sistemler 100 MB'ı aşabilmektedir.
+> Üçünü birden kaydetmek hem yavaş hem gereksiz olduğundan, büyük koordinat
+> dosyalarından yalnızca Uygulama 2'ninki saklanmaktadır. Hepsini kaydetmek
+> isteyenler not defterindeki `BUYUK_DOSYA_KAYDET` değişkenini `True`
+> yapabilirler.
 
 ---
 
@@ -305,8 +266,6 @@ materyaller katılımcılarla paylaşılacaktır:
 - Tüm komutlar ve `.bent` yapılandırma dosyaları: [`kodlar/`](kodlar/)
 - Uygulamanın tam kaydı: [`VIDEO.md`](VIDEO.md)
 - Önceden üretilmiş çıktı dosyaları
-
-Her iki durumda da katılımcılar çalışan bir örnek ile kursu tamamlayacaklardır.
 
 ---
 
