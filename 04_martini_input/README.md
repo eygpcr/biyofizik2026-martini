@@ -11,6 +11,10 @@ Colab not defteri: [`notebooks/04_martini_input.ipynb`](../notebooks/04_martini_
 > indirmeye gerek yoktur. Not defteri çalıştırıldığında Google Drive'ınızda
 > `Biyofizik2026_Martini/martini_input/` klasörü oluşturulmakta ve tüm çıktılar
 > (`girdi/`, `cikti/`, `gorseller/`) buraya kaydedilmektedir.
+>
+> Her adımın sonunda üretilen yapı not defteri içinde etkileşimli olarak
+> görüntülenmekte (döndürülebilir, yakınlaştırılabilir) ve statik bir çizimi
+> `gorseller/` klasörüne PNG olarak kaydedilmektedir.
 
 ---
 
@@ -90,10 +94,29 @@ martinize2 \
   -o topol.top \
   -x at2r_cg.pdb \
   -ff martini3001 \
-  -dssp \
-  -elastic \
-  -ef 700 -el 0.5 -eu 0.9 -ea 0 -ep 0
+  -ss $SS \
+  -elastic -ef 700 -el 0.5 -eu 0.9 -ea 0 -ep 0 \
+  -cys auto
 ```
+
+**İkincil yapı neden `-dssp` ile belirlenmiyor?** Ubuntu depolarındaki güncel
+`mkdssp` sürümü (4.x) girdi dosyasında `CRYST1` kaydı aramakta, `vermouth`
+tarafından üretilen geçici dosyada ise bu kayıt bulunmamaktadır. Bu nedenle
+`-dssp` kullanımı şu hatayı vermektedir:
+
+```
+DSSPError: DSSP encountered an error. Expected record CRYST1 but found ATOM
+```
+
+Bunun yerine ikincil yapı, kristal yapının kendi `HELIX` ve `SHEET`
+kayıtlarından çıkarılıp `-ss` seçeneği ile verilmektedir. 6JOD A zinciri için
+elde edilen dize 306 karakter uzunluğunda olup heliks oranı yaklaşık %84'tür;
+bu dağılım yedi transmembran heliksli bir GPCR için beklenen değerdir. Hücre
+dışı ikinci ilmikteki (ECL2) kısa β-firkete de doğru biçimde yakalanmaktadır.
+
+> Deneysel yapı yerine bir model (örneğin AlphaFold çıktısı) kullanılıyorsa bu
+> kayıtlar bulunmayacaktır; o durumda uyumlu bir DSSP sürümü kurulmalı veya
+> ikincil yapı `mdtraj` gibi bir kütüphaneyle hesaplanmalıdır.
 
 | Parametre | İşlevi | Önemi |
 |---|---|---|
@@ -147,7 +170,25 @@ insane \
 **Tartışma sorusu.** Bu sistemin parçacık sayısı nedir? Aynı hacimdeki atomistik
 bir sistem kaç atom içerecekti?
 
-### Adım 4. Topoloji dosyasının düzeltilmesi
+### Adım 4. İyon adlarının düzeltilmesi
+
+**Bu adım atlanırsa `gmx grompp` şu hatayı verir:**
+
+```
+ERROR 1 [file sistem.top]:
+  No such moleculetype NA+
+```
+
+`insane` aracı Martini 2 döneminde geliştirilmiş olup iyonları `NA+` ve `CL-`
+adlarıyla üretmektedir. Martini 3 kuvvet alanı ise aynı iyonları `NA` ve `CL`
+adlarıyla tanımlamaktadır. Adlar eşleşmediğinden GROMACS molekül tipini
+bulamamaktadır.
+
+Çözüm, hem koordinat dosyasındaki hem topolojideki adların dönüştürülmesidir;
+not defterinin 10. bölümü bu işlemi yapmaktadır. Bu, `insane` ile Martini 3'ün
+birlikte kullanımında karşılaşılan en yaygın sorundur.
+
+### Adım 5. Topoloji dosyasının düzeltilmesi
 
 `insane` aracı topoloji dosyasını üretmekte, ancak kuvvet alanı `#include`
 satırlarının kullanıcı tarafından eklenmesi gerekmektedir. Bu adım, iş akışında
@@ -161,7 +202,7 @@ en sık hata alınan noktadır.
 #include "martini_v3.0.0_phospholipids_v1.itp"
 ```
 
-### Adım 5. `gmx grompp` ile doğrulama
+### Adım 6. `gmx grompp` ile doğrulama
 
 ```bash
 gmx grompp -f minimization.mdp -c sistem.gro -p sistem.top -o em.tpr -maxwarn 1
@@ -174,7 +215,7 @@ dosyalarının birbiriyle tutarlılığı sınanmaktadır. `.tpr` dosyasının
 Sık karşılaşılan hata iletileri ve çözümleri not defterinin sonunda
 listelenmiştir.
 
-### Adım 6 (isteğe bağlı). Kısa enerji minimizasyonu
+### Adım 7 (isteğe bağlı). Kısa enerji minimizasyonu
 
 ```bash
 gmx mdrun -deffnm em -nsteps 500
