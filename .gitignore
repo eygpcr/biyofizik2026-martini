@@ -20,3 +20,7 @@ charmm-gui-*/
 .DS_Store
 __pycache__/
 .ipynb_checkpoints/
+
+# Kurs sirasinda calistirilan not defteri kopyalari
+*kopyas*.ipynb
+*_copy.ipynb
