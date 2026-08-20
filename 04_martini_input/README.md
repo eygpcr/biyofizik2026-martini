@@ -78,13 +78,28 @@ Uygulamanın tamamı Colab not defterinde adım adım yürütülmektedir. Aşağ
 | `insane` | Membran inşası, proteinin yerleştirilmesi, çözücü ve iyon eklenmesi |
 | `gmx grompp` | Koordinat, topoloji ve parametre dosyalarının tutarlılığının sınanması |
 
-### Adım 1. Yapının hazırlanması
+### Adım 1. Membrana göre yönlendirme
 
-Yalnızca A zinciri kullanılacaktır:
+Bu, komut satırı iş akışındaki **en kritik ve en sık atlanan** adımdır.
+
+PDB dosyasındaki koordinatlar kristal biriminin çerçevesinde verilmektedir; bu
+çerçevenin membran düzlemiyle bir ilişkisi yoktur. `insane` aracı proteini kutuya
+**ortalamakta**, ancak **döndürmemektedir**. Yönlendirme yapılmazsa protein
+membrana yatık gömülür ve transmembran heliksleri çift tabakaya dik olmaz.
+
+6JOD için ölçüm: kristal çerçevesinde proteinin uzun ekseni z ekseniyle yaklaşık
+**80 derece** açı yapmaktadır. [OPM](https://opm.phar.umich.edu/) veritabanındaki
+yönlendirilmiş hâlde bu açı **11 dereceye** düşmektedir.
 
 ```bash
-grep '^ATOM' 6jod.pdb | awk '$0 ~ /^.{21}A/' > at2r.pdb
+wget https://opm-assets.storage.googleapis.com/pdb/6jod.pdb -O 6jod_opm.pdb
 ```
+
+Ardından yalnızca A zinciri ayıklanır (`DUM` membran işaretçileri hariç).
+
+> **Sabah oturumuyla bağlantı.** CHARMM-GUI Membrane Builder da aynı işlemi
+> PPM/OPM sunucusunu çağırarak yapmaktadır. Grafik arayüzde arka planda
+> gerçekleşen bu adım, komut satırında açıkça yürütülmelidir.
 
 ### Adım 2. `martinize2` ile kaba-taneli modele dönüştürme
 
@@ -223,7 +238,39 @@ gmx mdrun -deffnm em -nsteps 500
 
 ---
 
-## Bölüm C. Martini modelinin sınırlılıkları
+## Yapısal kısıt modelleri
+
+Martini kuvvet alanı proteinin üçüncül yapısını kendi başına koruyamamaktadır;
+yapıya dışarıdan bir kısıt eklenmesi zorunludur. Alanda üç yaklaşım
+kullanılmaktadır ve not defterinde üçü de aynı protein üzerinde uygulanıp
+karşılaştırılmaktadır.
+
+| | **Elastik ağ** | **Gō-Martini** | **OLIVES** |
+|---|---|---|---|
+| Kısıtın türü | Harmonik yaylar | LJ kontakları (sanal bölgeler) | LJ kontakları |
+| Kontak ölçütü | Mesafe (0.5–0.9 nm) | Yapısal kontak haritası | Hidrojen bağı ağı |
+| Neyi bağlar? | Yalnızca omurga | Yalnızca omurga | Omurga **ve yan zincirler** |
+| Kısıt kopabilir mi? | Hayır | Evet | Evet |
+| İkincil yapı | Sabit (`-ss`) | Sabit (`-ss`) | Dinamik (`-ss` gerekmez) |
+| Uygulama | `martinize2 -elastic` | `martinize2 -go` | Ayrı betik |
+
+6JOD A zinciri için üretilen kısıt sayıları: elastik ağ **1289** yay,
+Gō-Martini **566** kontak, OLIVES **393** kontak.
+
+**Hangisi ne zaman?**
+
+- **Elastik ağ** — protein yapısının sabit kalmasının beklendiği, ilgi odağının
+  çevre olduğu çalışmalar: lipit–protein etkileşimleri, difüzyon, oligomerleşme.
+  Kursun ana akışında kullanılan yöntem budur.
+- **Gō-Martini** — kısıtların kopabilmesinin gerektiği durumlar: mekanik açılma,
+  alt birim ayrışması.
+- **OLIVES** — ikincil yapının kendisinin değişebilmesi gereken çalışmalar,
+  protein kompleksleri, nükleik asitler.
+
+Not defteri üç modelin kısıt ağını dört panel hâlinde çizmektedir; bu gösterim
+Pedersen ve ark. (2024) makalesinin 3. şeklinin 6JOD için üretilmiş hâlidir.
+
+## Martini modelinin sınırlılıkları
 
 - **Zaman ölçeği.** Yumuşatılmış serbest enerji yüzeyi nedeniyle dinamik
   yaklaşık dört kat hızlanmaktadır. Yayınlarda etkin zaman olarak
@@ -247,6 +294,32 @@ Bu oturum aşağıdaki resmî öğretim materyallerinden uyarlanmıştır:
 
 - [Martini Protein Model — Using Martinize2](https://cgmartini.nl/docs/tutorials/Martini3/ProteinsI/Tut1.html)
 - [Modeling Complex Lipid Membranes — INSANE](https://cgmartini.nl/docs/tutorials/Martini3/LipidsII/)
+- [OPM — Orientations of Proteins in Membranes](https://opm.phar.umich.edu/)
+- Souza ve ark. (2025). *GōMartini 3.* Nature Communications, 16.
+  [doi:10.1038/s41467-025-58719-0](https://doi.org/10.1038/s41467-025-58719-0)
+- Pedersen ve ark. (2024). *OLIVES.* J. Chem. Theory Comput.
+  [doi:10.1021/acs.jctc.4c00553](https://doi.org/10.1021/acs.jctc.4c00553)
+
+---
+
+## Çıktılar
+
+Not defteri, GROMACS ile doğrudan çalıştırılabilecek eksiksiz bir paketi
+Google Drive'a kaydetmektedir:
+
+```
+Biyofizik2026_Martini/martini_input/
+├── girdi/        ham ve yönlendirilmiş yapılar
+├── cikti/        ara çıktılar, üç modelin topolojileri
+├── gorseller/    çizimler (PNG)
+└── simulasyon/   sistem.gro, sistem.top, molecule_0.itp,
+                  martini_v3.0.0*.itp, em/eq/md.mdp, index.ndx,
+                  calistir.sh, OKUBENI.md
+```
+
+`simulasyon/` klasörü kendi kendine yeterlidir; kuvvet alanı dosyaları dâhil
+olduğundan dışarıdan hiçbir dosyaya bağımlı değildir. Not defteri bu paketin
+gerçekten çalıştığını `gmx grompp` ile ayrıca sınamaktadır.
 
 ---
 
