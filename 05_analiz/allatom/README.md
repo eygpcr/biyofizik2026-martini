@@ -18,8 +18,14 @@ Colab not defteri: [`notebooks/05a_allatom_analiz.ipynb`](../../notebooks/05a_al
 oturumda, elde edilmiş bir trajektorinin hangi ölçütlerle değerlendirileceği
 incelenmektedir.
 
-Kursta üretim simülasyonu koşulmadığından, önceden hesaplanmış bir trajektori
-kullanılacaktır. Dosyalar: [`../trajektori/`](../trajektori/)
+Kursta üretim simülasyonu koşulmadığından önceden hesaplanmış bir trajektori
+kullanılmaktadır: **adenilat kinaz** (PDB `1AKE`), CHARMM/TIP3P, 1001 kare,
+200 ns. Dosyalar: [`../trajektori/`](../trajektori/)
+
+Bu sistem, büyük ölçekli konformasyonel değişimin ders kitabı örneğidir; enzim
+substrat bağlanmasıyla açık konformasyondan kapalı konformasyona geçer.
+Trajektoride omurga RMSD'si 0,9 nm'ye ulaşmaktadır — yani analizler küçük
+dalgalanmaları değil gerçek bir domain hareketini ölçmektedir.
 
 ---
 
