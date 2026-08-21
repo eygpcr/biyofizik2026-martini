@@ -1,6 +1,6 @@
 # Oturum 5b — Kaba-Taneli Modellerde Analiz Farklılıkları
 
-**Dr. Öğr. Üyesi Ekrem Yaşar**
+**Doç. Dr. Mustafa Tekpınar, Dr. Öğr. Üyesi Ekrem Yaşar**
 
 ---
 

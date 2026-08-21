@@ -75,14 +75,14 @@ simülasyonu deneyimi olmadığı varsayılmaktadır.
 |---|---|---|---|
 | 09:00–09:45 | [1. Moleküler dinamiğin temelleri ve ölçek problemi](01_teori/) | N. Yaraş, M. Tekpınar | |
 | 09:45–10:00 | Ara | | |
-| 10:00–10:45 | [2. CHARMM-GUI Solution Builder — PDB `1AKI`](02_charmm-gui_solution/) | E. Yaşar | tarayıcı |
+| 10:00–10:45 | [2. CHARMM-GUI Solution Builder — PDB `1AKI`](02_charmm-gui_solution/) | N. Yaraş, E. Yaşar | tarayıcı |
 | 10:45–11:00 | Ara | | |
 | 11:00–12:15 | [3. CHARMM-GUI Membrane Builder — PDB `6JOD`](03_charmm-gui_membrane/) | E. Yaşar | tarayıcı |
 | 12:15–13:30 | Öğle arası | | |
 | 13:30–15:00 | [4. Martini 3 girdi hazırlama: `martinize2` ve `insane`](04_martini_input/) | E. Yaşar | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eygpcr/biyofizik2026-martini/blob/main/notebooks/04_martini_input.ipynb) |
 | 15:00–15:20 | Ara | | |
 | 15:20–16:00 | [5a. Atomistik trajektori analizi](05_analiz/allatom/) | M. Tekpınar | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eygpcr/biyofizik2026-martini/blob/main/notebooks/05a_allatom_analiz.ipynb) |
-| 16:00–16:20 | [5b. Kaba-taneli modellerde analiz farklılıkları](05_analiz/martini/) | E. Yaşar | |
+| 16:00–16:20 | [5b. Kaba-taneli modellerde analiz farklılıkları](05_analiz/martini/) | M. Tekpınar, E. Yaşar | |
 | 16:20–16:35 | Ara | | |
 | 16:35–17:15 | [6. `bentopy` ile kalabalık hücresel sistemler](06_bentopy/) | E. Yaşar | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eygpcr/biyofizik2026-martini/blob/main/notebooks/06_bentopy.ipynb) |
 | 17:15–17:30 | Değerlendirme ve [ileri okuma](ILERI_OKUMA.md) | Tüm eğitmenler | |
@@ -95,6 +95,33 @@ simülasyonu deneyimi olmadığı varsayılmaktadır.
 |---|---|---|
 | [1AKI](https://www.rcsb.org/structure/1AKI) | Tavuk yumurta akı lizozimi; X-ışını kırınımı, 1.5 Å; tek zincir, kofaktörsüz | Oturum 2 |
 | [6JOD](https://www.rcsb.org/structure/6JOD) | Anjiyotensin II tip-2 reseptörü (AT2R), ligantlı; X-ışını kırınımı, 3.2 Å | Oturum 3 ve 4 |
+| [1AKE](https://www.rcsb.org/structure/1AKE) | *E. coli* adenilat kinaz, AP5A inhibitörüyle kompleks; X-ışını kırınımı, 2.0 Å | Oturum 5 |
+
+### 1AKE — analiz trajektorisi
+
+Oturum 5'te analiz edilecek trajektori bu yapıdan üretilmiştir
+(Doç. Dr. Mustafa Tekpınar). Dosyalar:
+[`05_analiz/trajektori/`](05_analiz/trajektori/)
+
+| | |
+|---|---|
+| Sistem | Adenilat kinaz, 214 rezidü (A zinciri), 3.341 atom |
+| Kuvvet alanı | CHARMM / TIP3P |
+| Trajektori | 1001 kare, 200 ps aralık — toplam 200 ns |
+| İçerik | Yalnızca protein; çözücü çıkarılmış |
+
+Adenilat kinaz, büyük ölçekli konformasyonel değişimin ders kitabı örneğidir.
+1AKE yapısı enzimin **kapalı** (inhibitörle bağlı) hâlidir; inhibitör
+çıkarıldığında LID ve NMP alanları açılır. Trajektori bu geçişi
+yakalamaktadır:
+
+| Ölçüt | İlk kare | Son kare |
+|---|---|---|
+| Jirasyon yarıçapı | 1,63 nm | 1,92 nm |
+| Omurga RMSD | 0 | 0,72 nm (en yüksek 0,92 nm) |
+
+Bu genlikteki bir hareket, RMSD, RMSF ve jirasyon yarıçapı analizlerinin
+gerçek bir yapısal geçişi ölçtüğü anlamına gelmektedir.
 
 ### 6JOD yapısının zincir bileşimi
 
